@@ -16,12 +16,10 @@ Two-phase pipeline, like phone scanner apps:
 
 ## Demo
 
-<video src="https://raw.githubusercontent.com/AdityaKharmaleGoat7/vslam_Rd455/main/assets/demo.webm" controls width="100%"></video>
-
-*(if the player above doesn't load, [watch/download the video directly](assets/demo.webm))*
+![Live capture demo](assets/demo.gif)
+*Live preview: color + depth feed with tracking status, frame count, and FPS.*
 
 ![Live capture HUD](assets/screenshot.png)
-*Live preview: color + depth feed with tracking status, frame count, and FPS.*
 
 ## Requirements
 
