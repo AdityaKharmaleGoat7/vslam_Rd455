@@ -14,6 +14,15 @@ Two-phase pipeline, like phone scanner apps:
    at finer (4 mm) voxels, de-noised, and saved with standard 8-bit RGB
    that any viewer (MeshLab, CloudCompare, web) displays.
 
+## Demo
+
+<video src="https://raw.githubusercontent.com/AdityaKharmaleGoat7/vslam_Rd455/main/assets/demo.webm" controls width="100%"></video>
+
+*(if the player above doesn't load, [watch/download the video directly](assets/demo.webm))*
+
+![Live capture HUD](assets/screenshot.png)
+*Live preview: color + depth feed with tracking status, frame count, and FPS.*
+
 ## Requirements
 
 - Python 3.9+ with `open3d >= 0.18`, `pyrealsense2`, `opencv-python`, `numpy`
