@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+venv/
+*.egg-info/
+.claude/
+
+# scan outputs
+*.ply
+*.trajectory.npy
+*.meta.json
+*_frames/

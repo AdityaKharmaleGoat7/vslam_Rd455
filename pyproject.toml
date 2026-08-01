@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "d455-scanner"
+version = "1.0.0"
+description = "Handheld realtime RGB-D 3D scanner for the Intel RealSense D455 (dense SLAM + TSDF fusion with pose-graph-optimized offline refinement)"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "opencv-python",
+    "open3d>=0.18",
+    "pyrealsense2",
+]
+
+[project.scripts]
+d455-scan = "scanner.cli:main"
+
+[tool.setuptools]
+packages = ["scanner"]
