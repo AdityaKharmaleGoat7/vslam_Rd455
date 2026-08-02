@@ -1,0 +1,918 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "4191a8c213cb65766f0eafade9a75913753ea2df",
+  "generatedAt": "2026-08-02T02:01:37.432Z",
+  "files": {
+    ".ua/.understandignore": {
+      "filePath": ".ua/.understandignore",
+      "contentHash": "0795af441858e4cfdcd32f4118e6d6f06b9c29efe38de28439a489e731e92254",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 70,
+      "hasStructuralAnalysis": false
+    },
+    ".ua/config.json": {
+      "filePath": ".ua/config.json",
+      "contentHash": "4b66f98f8a815dfeb2d3a29eeb73418e07c40ed020a1498c07e908b2254f0c8c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "0e51c3a984103869b5d2d652db22e83c4291bcc797f08e465524f8482f3bfdb6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 171,
+      "hasStructuralAnalysis": true
+    },
+    "pyproject.toml": {
+      "filePath": "pyproject.toml",
+      "contentHash": "d64d781d477b0281e192e0229aba86eecab7e32e3c6ff74b96c0147947467170",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "realtime_pointcloud.py": {
+      "filePath": "realtime_pointcloud.py",
+      "contentHash": "c349c1fa0c8502653c7b3ba59fc78324a8487fe34a923129030770245d6c1f7d",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "scanner.cli",
+          "specifiers": [
+            "main"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/__init__.py": {
+      "filePath": "scanner/__init__.py",
+      "contentHash": "6a4d30fc6c99aa43d58429bacab39fcf7bd6c3c1434888468b19b3add3d824e7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/__main__.py": {
+      "filePath": "scanner/__main__.py",
+      "contentHash": "4d47d92948c138e25db09e1036cc90d6a27b7dd629062fdd4a89d703cf37a26e",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": ".cli",
+          "specifiers": [
+            "main"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/camera.py": {
+      "filePath": "scanner/camera.py",
+      "contentHash": "b579201a13e5cd12f349bf896c659d555f4b9cbb6df72416007f61145299088c",
+      "functions": [
+        {
+          "name": "start_camera",
+          "params": [
+            "args"
+          ],
+          "exported": true,
+          "lineCount": 48
+        },
+        {
+          "name": "filter_and_align",
+          "params": [
+            "frames",
+            "filters",
+            "align",
+            "state"
+          ],
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "lock_exposure",
+          "params": [
+            "profile"
+          ],
+          "exported": true,
+          "lineCount": 22
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "open3d.core",
+          "specifiers": [
+            "o3c"
+          ]
+        },
+        {
+          "source": "pyrealsense2",
+          "specifiers": [
+            "rs"
+          ]
+        }
+      ],
+      "exports": [
+        "start_camera",
+        "filter_and_align",
+        "lock_exposure"
+      ],
+      "totalLines": 118,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/capture.py": {
+      "filePath": "scanner/capture.py",
+      "contentHash": "47281dc0b7c32f1da27becdc768793835c3457c6baeb633b7a684af5a83ace83",
+      "functions": [],
+      "classes": [
+        {
+          "name": "CaptureSession",
+          "methods": [
+            "__init__",
+            "warm_up",
+            "run",
+            "_shutdown",
+            "_step",
+            "_prepare",
+            "_track",
+            "_relocalize",
+            "_integrate",
+            "_hud",
+            "_reset",
+            "finalize"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 319
+        }
+      ],
+      "imports": [
+        {
+          "source": "gc",
+          "specifiers": [
+            "gc"
+          ]
+        },
+        {
+          "source": "shutil",
+          "specifiers": [
+            "shutil"
+          ]
+        },
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        },
+        {
+          "source": "traceback",
+          "specifiers": [
+            "traceback"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "datetime"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "cv2",
+          "specifiers": [
+            "cv2"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "open3d",
+          "specifiers": [
+            "o3d"
+          ]
+        },
+        {
+          "source": "open3d.core",
+          "specifiers": [
+            "o3c"
+          ]
+        },
+        {
+          "source": "pyrealsense2",
+          "specifiers": [
+            "rs"
+          ]
+        },
+        {
+          "source": ".camera",
+          "specifiers": [
+            "filter_and_align",
+            "lock_exposure",
+            "start_camera"
+          ]
+        },
+        {
+          "source": ".config",
+          "specifiers": [
+            "FITNESS_MIN",
+            "MAX_STEP_M",
+            "RELOC_AFTER",
+            "RELOC_FITNESS_MIN",
+            "RELOC_KEYFRAMES",
+            "RMSE_MAX"
+          ]
+        },
+        {
+          "source": ".frameio",
+          "specifiers": [
+            "FrameWriter",
+            "save_meta"
+          ]
+        },
+        {
+          "source": ".imu",
+          "specifiers": [
+            "start_imu"
+          ]
+        },
+        {
+          "source": ".mapping",
+          "specifiers": [
+            "save_cloud"
+          ]
+        },
+        {
+          "source": ".pipeline",
+          "specifiers": [
+            "offline_pipeline",
+            "view_result"
+          ]
+        },
+        {
+          "source": ".tracking",
+          "specifiers": [
+            "rgbd_odometry"
+          ]
+        }
+      ],
+      "exports": [
+        "CaptureSession"
+      ],
+      "totalLines": 361,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/cli.py": {
+      "filePath": "scanner/cli.py",
+      "contentHash": "882e19e422fb8f279c8d26f083d292e66b0635cca833465c44e477f7697bd923",
+      "functions": [
+        {
+          "name": "parse_args",
+          "params": [
+            "argv"
+          ],
+          "exported": true,
+          "lineCount": 52
+        },
+        {
+          "name": "main",
+          "params": [
+            "argv"
+          ],
+          "exported": true,
+          "lineCount": 17
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "argparse",
+          "specifiers": [
+            "argparse"
+          ]
+        },
+        {
+          "source": "open3d",
+          "specifiers": [
+            "o3d"
+          ]
+        },
+        {
+          "source": "open3d.core",
+          "specifiers": [
+            "o3c"
+          ]
+        }
+      ],
+      "exports": [
+        "parse_args",
+        "main"
+      ],
+      "totalLines": 102,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/config.py": {
+      "filePath": "scanner/config.py",
+      "contentHash": "0ed472a411c53f2425e48ed48a36353b159b7e33901e6951efc7ec35291af78a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 60,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/frameio.py": {
+      "filePath": "scanner/frameio.py",
+      "contentHash": "bab4b03029d5d203e88455210b5a01e617be2e1c2393581eab1c5d481d90b191",
+      "functions": [
+        {
+          "name": "load_rgbd",
+          "params": [
+            "frames_dir",
+            "i",
+            "device"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "build_meta",
+          "params": [
+            "intrinsic",
+            "depth_scale",
+            "args"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "save_meta",
+          "params": [
+            "path",
+            "intrinsic",
+            "depth_scale",
+            "args"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "load_meta",
+          "params": [
+            "path"
+          ],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [
+        {
+          "name": "FrameWriter",
+          "methods": [
+            "__init__",
+            "put",
+            "_run",
+            "drain",
+            "flush",
+            "close"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 60
+        }
+      ],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "queue",
+          "specifiers": [
+            "queue"
+          ]
+        },
+        {
+          "source": "threading",
+          "specifiers": [
+            "threading"
+          ]
+        },
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        },
+        {
+          "source": "cv2",
+          "specifiers": [
+            "cv2"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "open3d",
+          "specifiers": [
+            "o3d"
+          ]
+        }
+      ],
+      "exports": [
+        "FrameWriter",
+        "load_rgbd",
+        "build_meta",
+        "save_meta",
+        "load_meta"
+      ],
+      "totalLines": 125,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/imu.py": {
+      "filePath": "scanner/imu.py",
+      "contentHash": "b4bc51e5eafa336ebee8bf4a5eef82ed5a82b68c87e15e258079ea4c7a0b0f5d",
+      "functions": [
+        {
+          "name": "start_imu",
+          "params": [
+            "color_stream_profile"
+          ],
+          "exported": true,
+          "lineCount": 26
+        }
+      ],
+      "classes": [
+        {
+          "name": "GyroIntegrator",
+          "methods": [
+            "__init__",
+            "callback",
+            "pop_prior",
+            "reset"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 46
+        }
+      ],
+      "imports": [
+        {
+          "source": "threading",
+          "specifiers": [
+            "threading"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "pyrealsense2",
+          "specifiers": [
+            "rs"
+          ]
+        },
+        {
+          "source": ".config",
+          "specifiers": [
+            "GYRO_FPS",
+            "GYRO_MAX_DT",
+            "GYRO_MAX_PRIOR_DEG"
+          ]
+        },
+        {
+          "source": ".transforms",
+          "specifiers": [
+            "rotation_angle_deg",
+            "so3_exp"
+          ]
+        }
+      ],
+      "exports": [
+        "GyroIntegrator",
+        "start_imu"
+      ],
+      "totalLines": 95,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/mapping.py": {
+      "filePath": "scanner/mapping.py",
+      "contentHash": "8ba47fbae694238909324cd98ebb83d9df8c02ec80bb4ad75085daaded2cacce",
+      "functions": [
+        {
+          "name": "extract_cloud",
+          "params": [
+            "vbg",
+            "weight_threshold"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "save_cloud",
+          "params": [
+            "vbg",
+            "path",
+            "mesh",
+            "clean"
+          ],
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "refine",
+          "params": [
+            "frames_dir",
+            "poses",
+            "intrinsic",
+            "depth_scale",
+            "args",
+            "device"
+          ],
+          "exported": true,
+          "lineCount": 35
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "cv2",
+          "specifiers": [
+            "cv2"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "open3d",
+          "specifiers": [
+            "o3d"
+          ]
+        },
+        {
+          "source": "open3d.core",
+          "specifiers": [
+            "o3c"
+          ]
+        }
+      ],
+      "exports": [
+        "extract_cloud",
+        "save_cloud",
+        "refine"
+      ],
+      "totalLines": 89,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/pipeline.py": {
+      "filePath": "scanner/pipeline.py",
+      "contentHash": "6f462b5b6d7a1cae7e9ed94e744812dc1906455fff1f3b670299076fac659aeb",
+      "functions": [
+        {
+          "name": "offline_pipeline",
+          "params": [
+            "frames_dir",
+            "poses",
+            "intrinsic",
+            "depth_scale",
+            "args",
+            "device"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "view_result",
+          "params": [
+            "path"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "refine_only",
+          "params": [
+            "args",
+            "device"
+          ],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "open3d",
+          "specifiers": [
+            "o3d"
+          ]
+        },
+        {
+          "source": "open3d.core",
+          "specifiers": [
+            "o3c"
+          ]
+        },
+        {
+          "source": ".frameio",
+          "specifiers": [
+            "load_meta"
+          ]
+        },
+        {
+          "source": ".mapping",
+          "specifiers": [
+            "refine",
+            "save_cloud"
+          ]
+        },
+        {
+          "source": ".posegraph",
+          "specifiers": [
+            "optimize_trajectory"
+          ]
+        }
+      ],
+      "exports": [
+        "offline_pipeline",
+        "view_result",
+        "refine_only"
+      ],
+      "totalLines": 72,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/posegraph.py": {
+      "filePath": "scanner/posegraph.py",
+      "contentHash": "92e328386bfec1137b4c4a845e1aa6ae62f0f15a7d036568aad943f237644f2e",
+      "functions": [
+        {
+          "name": "select_keyframes",
+          "params": [
+            "poses",
+            "every",
+            "trans_thr",
+            "rot_thr_deg"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "optimize_trajectory",
+          "params": [
+            "frames_dir",
+            "poses",
+            "intrinsic",
+            "depth_scale",
+            "args",
+            "device"
+          ],
+          "exported": true,
+          "lineCount": 114
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "open3d",
+          "specifiers": [
+            "o3d"
+          ]
+        },
+        {
+          "source": "open3d.core",
+          "specifiers": [
+            "o3c"
+          ]
+        },
+        {
+          "source": ".config",
+          "specifiers": [
+            "FITNESS_MIN",
+            "LOOP_FITNESS_MIN",
+            "LOOP_MAX_ATTEMPTS",
+            "LOOP_MIN_GAP_FRAMES",
+            "LOOP_RADIUS_M",
+            "RMSE_MAX"
+          ]
+        },
+        {
+          "source": ".frameio",
+          "specifiers": [
+            "load_rgbd"
+          ]
+        },
+        {
+          "source": ".tracking",
+          "specifiers": [
+            "rgbd_odometry"
+          ]
+        },
+        {
+          "source": ".transforms",
+          "specifiers": [
+            "interp_transform",
+            "rotation_angle_deg"
+          ]
+        }
+      ],
+      "exports": [
+        "select_keyframes",
+        "optimize_trajectory"
+      ],
+      "totalLines": 153,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/tracking.py": {
+      "filePath": "scanner/tracking.py",
+      "contentHash": "96d1ebe3dc3b573466bd421d297cfa7324f5e5324164455e3652c4ea62e417c7",
+      "functions": [
+        {
+          "name": "odo_criteria",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "rgbd_odometry",
+          "params": [
+            "src_rgbd",
+            "tgt_rgbd",
+            "intrinsic",
+            "init",
+            "depth_scale",
+            "depth_max"
+          ],
+          "exported": true,
+          "lineCount": 25
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "open3d",
+          "specifiers": [
+            "o3d"
+          ]
+        },
+        {
+          "source": "open3d.core",
+          "specifiers": [
+            "o3c"
+          ]
+        }
+      ],
+      "exports": [
+        "odo_criteria",
+        "rgbd_odometry"
+      ],
+      "totalLines": 53,
+      "hasStructuralAnalysis": true
+    },
+    "scanner/transforms.py": {
+      "filePath": "scanner/transforms.py",
+      "contentHash": "faf33ea2b44e5be4ccdcc0b9fd932aed5ea1642756074a963131d844afd3af63",
+      "functions": [
+        {
+          "name": "so3_exp",
+          "params": [
+            "rvec"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "rotation_angle_deg",
+          "params": [
+            "R"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "interp_transform",
+          "params": [
+            "Ta",
+            "Tb",
+            "t"
+          ],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "cv2",
+          "specifiers": [
+            "cv2"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        }
+      ],
+      "exports": [
+        "so3_exp",
+        "rotation_angle_deg",
+        "interp_transform"
+      ],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

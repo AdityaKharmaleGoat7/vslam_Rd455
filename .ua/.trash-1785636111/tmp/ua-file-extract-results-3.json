@@ -1,0 +1,264 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 3,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 3,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "realtime_pointcloud.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 11,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scanner/__main__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 6,
+      "nonEmptyLines": 4,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scanner/cli.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 101,
+      "nonEmptyLines": 88,
+      "functions": [
+        {
+          "name": "parse_args",
+          "startLine": 31,
+          "endLine": 82,
+          "params": [
+            "argv"
+          ]
+        },
+        {
+          "name": "main",
+          "startLine": 85,
+          "endLine": 101,
+          "params": [
+            "argv"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "parse_args",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "main",
+          "line": 85,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "parse_args",
+          "callee": "argparse.ArgumentParser",
+          "lineNumber": 33
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 35
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 36
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 38
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 40
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 42
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 44
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 47
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 49
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 51
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 53
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 56
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 58
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 59
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 60
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 61
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 63
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 65
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 67
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 70
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 72
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 74
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 76
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 78
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.add_argument",
+          "lineNumber": 80
+        },
+        {
+          "caller": "parse_args",
+          "callee": "p.parse_args",
+          "lineNumber": 82
+        },
+        {
+          "caller": "main",
+          "callee": "parse_args",
+          "lineNumber": 88
+        },
+        {
+          "caller": "main",
+          "callee": "o3c.Device",
+          "lineNumber": 89
+        },
+        {
+          "caller": "main",
+          "callee": "o3d.core.cuda.is_available",
+          "lineNumber": 89
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 90
+        },
+        {
+          "caller": "main",
+          "callee": "refine_only",
+          "lineNumber": 94
+        },
+        {
+          "caller": "main",
+          "callee": "CaptureSession",
+          "lineNumber": 98
+        },
+        {
+          "caller": "main",
+          "callee": "session.warm_up",
+          "lineNumber": 99
+        },
+        {
+          "caller": "main",
+          "callee": "session.run",
+          "lineNumber": 100
+        },
+        {
+          "caller": "main",
+          "callee": "session.finalize",
+          "lineNumber": 101
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    }
+  ]
+}

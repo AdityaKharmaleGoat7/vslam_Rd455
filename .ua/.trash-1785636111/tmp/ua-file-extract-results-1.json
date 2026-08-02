@@ -1,0 +1,1861 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 6,
+  "filesSkipped": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 6,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 6,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "scanner/camera.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 117,
+      "nonEmptyLines": 102,
+      "functions": [
+        {
+          "name": "start_camera",
+          "startLine": 15,
+          "endLine": 62,
+          "params": [
+            "args"
+          ]
+        },
+        {
+          "name": "filter_and_align",
+          "startLine": 65,
+          "endLine": 93,
+          "params": [
+            "frames",
+            "filters",
+            "align",
+            "state"
+          ]
+        },
+        {
+          "name": "lock_exposure",
+          "startLine": 96,
+          "endLine": 117,
+          "params": [
+            "profile"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "start_camera",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "filter_and_align",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "lock_exposure",
+          "line": 96,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "start_camera",
+          "callee": "rs.pipeline",
+          "lineNumber": 24
+        },
+        {
+          "caller": "start_camera",
+          "callee": "rs.config",
+          "lineNumber": 25
+        },
+        {
+          "caller": "start_camera",
+          "callee": "config.enable_stream",
+          "lineNumber": 26
+        },
+        {
+          "caller": "start_camera",
+          "callee": "config.enable_stream",
+          "lineNumber": 27
+        },
+        {
+          "caller": "start_camera",
+          "callee": "pipeline.start",
+          "lineNumber": 28
+        },
+        {
+          "caller": "start_camera",
+          "callee": "profile.get_device().first_depth_sensor",
+          "lineNumber": 30
+        },
+        {
+          "caller": "start_camera",
+          "callee": "profile.get_device",
+          "lineNumber": 30
+        },
+        {
+          "caller": "start_camera",
+          "callee": "depth_sensor.set_option",
+          "lineNumber": 32
+        },
+        {
+          "caller": "start_camera",
+          "callee": "float",
+          "lineNumber": 33
+        },
+        {
+          "caller": "start_camera",
+          "callee": "depth_sensor.get_depth_scale",
+          "lineNumber": 36
+        },
+        {
+          "caller": "start_camera",
+          "callee": "rs.align",
+          "lineNumber": 39
+        },
+        {
+          "caller": "start_camera",
+          "callee": "rs.disparity_transform",
+          "lineNumber": 44
+        },
+        {
+          "caller": "start_camera",
+          "callee": "rs.spatial_filter",
+          "lineNumber": 44
+        },
+        {
+          "caller": "start_camera",
+          "callee": "rs.temporal_filter",
+          "lineNumber": 46
+        },
+        {
+          "caller": "start_camera",
+          "callee": "tf.set_option",
+          "lineNumber": 48
+        },
+        {
+          "caller": "start_camera",
+          "callee": "tf.set_option",
+          "lineNumber": 49
+        },
+        {
+          "caller": "start_camera",
+          "callee": "tf.set_option",
+          "lineNumber": 50
+        },
+        {
+          "caller": "start_camera",
+          "callee": "filters.append",
+          "lineNumber": 53
+        },
+        {
+          "caller": "start_camera",
+          "callee": "filters.append",
+          "lineNumber": 54
+        },
+        {
+          "caller": "start_camera",
+          "callee": "rs.disparity_transform",
+          "lineNumber": 54
+        },
+        {
+          "caller": "start_camera",
+          "callee": "profile.get_stream",
+          "lineNumber": 57
+        },
+        {
+          "caller": "start_camera",
+          "callee": "color_profile.as_video_stream_profile().get_intrinsics",
+          "lineNumber": 58
+        },
+        {
+          "caller": "start_camera",
+          "callee": "color_profile.as_video_stream_profile",
+          "lineNumber": 58
+        },
+        {
+          "caller": "start_camera",
+          "callee": "o3c.Tensor",
+          "lineNumber": 59
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "state.get",
+          "lineNumber": 76
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "flt.process",
+          "lineNumber": 80
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "align.process",
+          "lineNumber": 81
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "f.as_frameset",
+          "lineNumber": 81
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "aligned.get_depth_frame",
+          "lineNumber": 82
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "aligned.get_color_frame",
+          "lineNumber": 82
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "print",
+          "lineNumber": 85
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "align.process",
+          "lineNumber": 87
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "aligned.get_depth_frame",
+          "lineNumber": 88
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "aligned.get_color_frame",
+          "lineNumber": 89
+        },
+        {
+          "caller": "filter_and_align",
+          "callee": "flt.process",
+          "lineNumber": 92
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "profile.get_device",
+          "lineNumber": 100
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "dev.query_sensors",
+          "lineNumber": 102
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "s.get_info",
+          "lineNumber": 103
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "RuntimeError",
+          "lineNumber": 107
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "color_sensor.get_option",
+          "lineNumber": 108
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "color_sensor.get_option",
+          "lineNumber": 109
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "color_sensor.set_option",
+          "lineNumber": 110
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "color_sensor.set_option",
+          "lineNumber": 111
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "color_sensor.set_option",
+          "lineNumber": 112
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "color_sensor.set_option",
+          "lineNumber": 113
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "print",
+          "lineNumber": 114
+        },
+        {
+          "caller": "lock_exposure",
+          "callee": "print",
+          "lineNumber": 117
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scanner/capture.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 360,
+      "nonEmptyLines": 320,
+      "classes": [
+        {
+          "name": "CaptureSession",
+          "startLine": 42,
+          "endLine": 360,
+          "methods": [
+            "__init__",
+            "warm_up",
+            "run",
+            "_shutdown",
+            "_step",
+            "_prepare",
+            "_track",
+            "_relocalize",
+            "_integrate",
+            "_hud",
+            "_reset",
+            "finalize"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CaptureSession",
+          "line": 42,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "start_camera",
+          "lineNumber": 50
+        },
+        {
+          "caller": "__init__",
+          "callee": "print",
+          "lineNumber": 51
+        },
+        {
+          "caller": "__init__",
+          "callee": "start_imu",
+          "lineNumber": 56
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.profile.get_stream",
+          "lineNumber": 57
+        },
+        {
+          "caller": "__init__",
+          "callee": "o3c.Tensor",
+          "lineNumber": 59
+        },
+        {
+          "caller": "__init__",
+          "callee": "np.eye",
+          "lineNumber": 59
+        },
+        {
+          "caller": "__init__",
+          "callee": "o3d.t.pipelines.slam.Model",
+          "lineNumber": 60
+        },
+        {
+          "caller": "__init__",
+          "callee": "o3d.t.pipelines.slam.Frame",
+          "lineNumber": 62
+        },
+        {
+          "caller": "__init__",
+          "callee": "o3d.t.pipelines.slam.Frame",
+          "lineNumber": 64
+        },
+        {
+          "caller": "__init__",
+          "callee": "time.time",
+          "lineNumber": 70
+        },
+        {
+          "caller": "__init__",
+          "callee": "Path(args.output).with_suffix",
+          "lineNumber": 76
+        },
+        {
+          "caller": "__init__",
+          "callee": "Path",
+          "lineNumber": 76
+        },
+        {
+          "caller": "__init__",
+          "callee": "Path",
+          "lineNumber": 77
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.frames_dir.mkdir",
+          "lineNumber": 80
+        },
+        {
+          "caller": "__init__",
+          "callee": "FrameWriter",
+          "lineNumber": 81
+        },
+        {
+          "caller": "warm_up",
+          "callee": "range",
+          "lineNumber": 87
+        },
+        {
+          "caller": "warm_up",
+          "callee": "self.pipeline.wait_for_frames",
+          "lineNumber": 88
+        },
+        {
+          "caller": "warm_up",
+          "callee": "lock_exposure",
+          "lineNumber": 90
+        },
+        {
+          "caller": "warm_up",
+          "callee": "save_meta",
+          "lineNumber": 92
+        },
+        {
+          "caller": "run",
+          "callee": "self._step",
+          "lineNumber": 99
+        },
+        {
+          "caller": "run",
+          "callee": "print",
+          "lineNumber": 102
+        },
+        {
+          "caller": "run",
+          "callee": "traceback.print_exc",
+          "lineNumber": 105
+        },
+        {
+          "caller": "run",
+          "callee": "self._shutdown",
+          "lineNumber": 107
+        },
+        {
+          "caller": "_shutdown",
+          "callee": "self.pipeline.stop",
+          "lineNumber": 111
+        },
+        {
+          "caller": "_shutdown",
+          "callee": "self.imu_pipe.stop",
+          "lineNumber": 113
+        },
+        {
+          "caller": "_shutdown",
+          "callee": "cv2.destroyAllWindows",
+          "lineNumber": 114
+        },
+        {
+          "caller": "_shutdown",
+          "callee": "self.writer.close",
+          "lineNumber": 116
+        },
+        {
+          "caller": "_shutdown",
+          "callee": "np.save",
+          "lineNumber": 118
+        },
+        {
+          "caller": "_shutdown",
+          "callee": "np.stack",
+          "lineNumber": 118
+        },
+        {
+          "caller": "_step",
+          "callee": "self.pipeline.wait_for_frames",
+          "lineNumber": 124
+        },
+        {
+          "caller": "_step",
+          "callee": "filter_and_align",
+          "lineNumber": 125
+        },
+        {
+          "caller": "_step",
+          "callee": "self._prepare",
+          "lineNumber": 130
+        },
+        {
+          "caller": "_step",
+          "callee": "self.gyro.reset",
+          "lineNumber": 136
+        },
+        {
+          "caller": "_step",
+          "callee": "self._track",
+          "lineNumber": 138
+        },
+        {
+          "caller": "_step",
+          "callee": "self._relocalize",
+          "lineNumber": 140
+        },
+        {
+          "caller": "_step",
+          "callee": "self._integrate",
+          "lineNumber": 143
+        },
+        {
+          "caller": "_step",
+          "callee": "self.gyro.reset",
+          "lineNumber": 147
+        },
+        {
+          "caller": "_step",
+          "callee": "time.time",
+          "lineNumber": 149
+        },
+        {
+          "caller": "_step",
+          "callee": "max",
+          "lineNumber": 150
+        },
+        {
+          "caller": "_step",
+          "callee": "self._hud",
+          "lineNumber": 153
+        },
+        {
+          "caller": "_prepare",
+          "callee": "np.asanyarray(depth_frame.get_data()).astype",
+          "lineNumber": 162
+        },
+        {
+          "caller": "_prepare",
+          "callee": "np.asanyarray",
+          "lineNumber": 162
+        },
+        {
+          "caller": "_prepare",
+          "callee": "depth_frame.get_data",
+          "lineNumber": 162
+        },
+        {
+          "caller": "_prepare",
+          "callee": "np.asanyarray(color_frame.get_data()).copy",
+          "lineNumber": 164
+        },
+        {
+          "caller": "_prepare",
+          "callee": "np.asanyarray",
+          "lineNumber": 164
+        },
+        {
+          "caller": "_prepare",
+          "callee": "color_frame.get_data",
+          "lineNumber": 164
+        },
+        {
+          "caller": "_prepare",
+          "callee": "cv2.resize",
+          "lineNumber": 166
+        },
+        {
+          "caller": "_prepare",
+          "callee": "np.float32",
+          "lineNumber": 168
+        },
+        {
+          "caller": "_prepare",
+          "callee": "np.ascontiguousarray",
+          "lineNumber": 171
+        },
+        {
+          "caller": "_prepare",
+          "callee": "o3d.t.geometry.Image(depth_np).to",
+          "lineNumber": 172
+        },
+        {
+          "caller": "_prepare",
+          "callee": "o3d.t.geometry.Image",
+          "lineNumber": 172
+        },
+        {
+          "caller": "_prepare",
+          "callee": "o3d.t.geometry.Image(color_rgb).to",
+          "lineNumber": 173
+        },
+        {
+          "caller": "_prepare",
+          "callee": "o3d.t.geometry.Image",
+          "lineNumber": 173
+        },
+        {
+          "caller": "_prepare",
+          "callee": "self.input_frame.set_data_from_image",
+          "lineNumber": 174
+        },
+        {
+          "caller": "_prepare",
+          "callee": "self.input_frame.set_data_from_image",
+          "lineNumber": 175
+        },
+        {
+          "caller": "_track",
+          "callee": "self.gyro.pop_prior",
+          "lineNumber": 182
+        },
+        {
+          "caller": "_track",
+          "callee": "np.eye",
+          "lineNumber": 182
+        },
+        {
+          "caller": "_track",
+          "callee": "o3d.t.geometry.RGBDImage",
+          "lineNumber": 188
+        },
+        {
+          "caller": "_track",
+          "callee": "self.input_frame.get_data_as_image",
+          "lineNumber": 189
+        },
+        {
+          "caller": "_track",
+          "callee": "self.input_frame.get_data_as_image",
+          "lineNumber": 190
+        },
+        {
+          "caller": "_track",
+          "callee": "o3d.t.geometry.RGBDImage",
+          "lineNumber": 191
+        },
+        {
+          "caller": "_track",
+          "callee": "self.raycast_frame.get_data_as_image",
+          "lineNumber": 192
+        },
+        {
+          "caller": "_track",
+          "callee": "self.raycast_frame.get_data_as_image",
+          "lineNumber": 193
+        },
+        {
+          "caller": "_track",
+          "callee": "rgbd_odometry",
+          "lineNumber": 194
+        },
+        {
+          "caller": "_track",
+          "callee": "self.model.track_frame_to_model",
+          "lineNumber": 197
+        },
+        {
+          "caller": "_track",
+          "callee": "np.linalg.norm",
+          "lineNumber": 203
+        },
+        {
+          "caller": "_track",
+          "callee": "result.transformation.numpy",
+          "lineNumber": 203
+        },
+        {
+          "caller": "_relocalize",
+          "callee": "o3d.t.geometry.RGBDImage",
+          "lineNumber": 213
+        },
+        {
+          "caller": "_relocalize",
+          "callee": "reversed",
+          "lineNumber": 214
+        },
+        {
+          "caller": "_relocalize",
+          "callee": "rgbd_odometry",
+          "lineNumber": 216
+        },
+        {
+          "caller": "_relocalize",
+          "callee": "np.eye",
+          "lineNumber": 217
+        },
+        {
+          "caller": "_relocalize",
+          "callee": "o3c.Tensor",
+          "lineNumber": 223
+        },
+        {
+          "caller": "_relocalize",
+          "callee": "res.transformation.numpy",
+          "lineNumber": 223
+        },
+        {
+          "caller": "_relocalize",
+          "callee": "print",
+          "lineNumber": 225
+        },
+        {
+          "caller": "_integrate",
+          "callee": "self.model.update_frame_pose",
+          "lineNumber": 234
+        },
+        {
+          "caller": "_integrate",
+          "callee": "self.model.integrate",
+          "lineNumber": 235
+        },
+        {
+          "caller": "_integrate",
+          "callee": "self.model.synthesize_model_frame",
+          "lineNumber": 237
+        },
+        {
+          "caller": "_integrate",
+          "callee": "self.poses.append",
+          "lineNumber": 240
+        },
+        {
+          "caller": "_integrate",
+          "callee": "self.T.numpy",
+          "lineNumber": 240
+        },
+        {
+          "caller": "_integrate",
+          "callee": "self.reloc_buf.append",
+          "lineNumber": 242
+        },
+        {
+          "caller": "_integrate",
+          "callee": "self.T.numpy",
+          "lineNumber": 243
+        },
+        {
+          "caller": "_integrate",
+          "callee": "o3d.t.geometry.RGBDImage",
+          "lineNumber": 244
+        },
+        {
+          "caller": "_integrate",
+          "callee": "len",
+          "lineNumber": 245
+        },
+        {
+          "caller": "_integrate",
+          "callee": "self.reloc_buf.pop",
+          "lineNumber": 246
+        },
+        {
+          "caller": "_integrate",
+          "callee": "self.writer.put",
+          "lineNumber": 248
+        },
+        {
+          "caller": "_integrate",
+          "callee": "self.writer.put",
+          "lineNumber": 250
+        },
+        {
+          "caller": "_hud",
+          "callee": "cv2.applyColorMap",
+          "lineNumber": 259
+        },
+        {
+          "caller": "_hud",
+          "callee": "cv2.convertScaleAbs",
+          "lineNumber": 260
+        },
+        {
+          "caller": "_hud",
+          "callee": "np.hstack",
+          "lineNumber": 264
+        },
+        {
+          "caller": "_hud",
+          "callee": "self.T.numpy",
+          "lineNumber": 265
+        },
+        {
+          "caller": "_hud",
+          "callee": "cv2.putText",
+          "lineNumber": 275
+        },
+        {
+          "caller": "_hud",
+          "callee": "cv2.putText",
+          "lineNumber": 277
+        },
+        {
+          "caller": "_hud",
+          "callee": "cv2.imshow",
+          "lineNumber": 280
+        },
+        {
+          "caller": "_hud",
+          "callee": "cv2.waitKey",
+          "lineNumber": 281
+        },
+        {
+          "caller": "_hud",
+          "callee": "ord",
+          "lineNumber": 282
+        },
+        {
+          "caller": "_hud",
+          "callee": "ord",
+          "lineNumber": 284
+        },
+        {
+          "caller": "_hud",
+          "callee": "Path(args.output).with_stem",
+          "lineNumber": 285
+        },
+        {
+          "caller": "_hud",
+          "callee": "Path",
+          "lineNumber": 285
+        },
+        {
+          "caller": "_hud",
+          "callee": "Path",
+          "lineNumber": 286
+        },
+        {
+          "caller": "_hud",
+          "callee": "datetime.now().strftime",
+          "lineNumber": 286
+        },
+        {
+          "caller": "_hud",
+          "callee": "datetime.now",
+          "lineNumber": 286
+        },
+        {
+          "caller": "_hud",
+          "callee": "save_cloud",
+          "lineNumber": 287
+        },
+        {
+          "caller": "_hud",
+          "callee": "ord",
+          "lineNumber": 288
+        },
+        {
+          "caller": "_hud",
+          "callee": "self._reset",
+          "lineNumber": 289
+        },
+        {
+          "caller": "_reset",
+          "callee": "print",
+          "lineNumber": 295
+        },
+        {
+          "caller": "_reset",
+          "callee": "o3c.Tensor",
+          "lineNumber": 296
+        },
+        {
+          "caller": "_reset",
+          "callee": "np.eye",
+          "lineNumber": 296
+        },
+        {
+          "caller": "_reset",
+          "callee": "o3d.t.pipelines.slam.Model",
+          "lineNumber": 297
+        },
+        {
+          "caller": "_reset",
+          "callee": "self.poses.clear",
+          "lineNumber": 302
+        },
+        {
+          "caller": "_reset",
+          "callee": "self.reloc_buf.clear",
+          "lineNumber": 303
+        },
+        {
+          "caller": "_reset",
+          "callee": "self.gyro.reset",
+          "lineNumber": 305
+        },
+        {
+          "caller": "_reset",
+          "callee": "self.writer.drain",
+          "lineNumber": 307
+        },
+        {
+          "caller": "_reset",
+          "callee": "shutil.rmtree",
+          "lineNumber": 308
+        },
+        {
+          "caller": "_reset",
+          "callee": "self.frames_dir.mkdir",
+          "lineNumber": 309
+        },
+        {
+          "caller": "_reset",
+          "callee": "save_meta",
+          "lineNumber": 310
+        },
+        {
+          "caller": "finalize",
+          "callee": "print",
+          "lineNumber": 319
+        },
+        {
+          "caller": "finalize",
+          "callee": "print",
+          "lineNumber": 324
+        },
+        {
+          "caller": "finalize",
+          "callee": "sys.exit",
+          "lineNumber": 328
+        },
+        {
+          "caller": "finalize",
+          "callee": "np.save",
+          "lineNumber": 330
+        },
+        {
+          "caller": "finalize",
+          "callee": "Path(args.output).with_suffix",
+          "lineNumber": 330
+        },
+        {
+          "caller": "finalize",
+          "callee": "Path",
+          "lineNumber": 330
+        },
+        {
+          "caller": "finalize",
+          "callee": "np.stack",
+          "lineNumber": 331
+        },
+        {
+          "caller": "finalize",
+          "callee": "save_meta",
+          "lineNumber": 334
+        },
+        {
+          "caller": "finalize",
+          "callee": "Path(args.output).with_suffix",
+          "lineNumber": 334
+        },
+        {
+          "caller": "finalize",
+          "callee": "Path",
+          "lineNumber": 334
+        },
+        {
+          "caller": "finalize",
+          "callee": "save_cloud",
+          "lineNumber": 338
+        },
+        {
+          "caller": "finalize",
+          "callee": "self.reloc_buf.clear",
+          "lineNumber": 343
+        },
+        {
+          "caller": "finalize",
+          "callee": "gc.collect",
+          "lineNumber": 344
+        },
+        {
+          "caller": "finalize",
+          "callee": "offline_pipeline",
+          "lineNumber": 346
+        },
+        {
+          "caller": "finalize",
+          "callee": "traceback.print_exc",
+          "lineNumber": 350
+        },
+        {
+          "caller": "finalize",
+          "callee": "print",
+          "lineNumber": 351
+        },
+        {
+          "caller": "finalize",
+          "callee": "sys.exit",
+          "lineNumber": 355
+        },
+        {
+          "caller": "finalize",
+          "callee": "shutil.rmtree",
+          "lineNumber": 357
+        },
+        {
+          "caller": "finalize",
+          "callee": "view_result",
+          "lineNumber": 360
+        }
+      ],
+      "metrics": {
+        "importCount": 7,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "scanner/frameio.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 124,
+      "nonEmptyLines": 102,
+      "functions": [
+        {
+          "name": "load_rgbd",
+          "startLine": 86,
+          "endLine": 97,
+          "params": [
+            "frames_dir",
+            "i",
+            "device"
+          ]
+        },
+        {
+          "name": "build_meta",
+          "startLine": 100,
+          "endLine": 112,
+          "params": [
+            "intrinsic",
+            "depth_scale",
+            "args"
+          ]
+        },
+        {
+          "name": "save_meta",
+          "startLine": 115,
+          "endLine": 118,
+          "params": [
+            "path",
+            "intrinsic",
+            "depth_scale",
+            "args"
+          ]
+        },
+        {
+          "name": "load_meta",
+          "startLine": 121,
+          "endLine": 124,
+          "params": [
+            "path"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FrameWriter",
+          "startLine": 24,
+          "endLine": 83,
+          "methods": [
+            "__init__",
+            "put",
+            "_run",
+            "drain",
+            "flush",
+            "close"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "FrameWriter",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "load_rgbd",
+          "line": 86,
+          "isDefault": false
+        },
+        {
+          "name": "build_meta",
+          "line": 100,
+          "isDefault": false
+        },
+        {
+          "name": "save_meta",
+          "line": 115,
+          "isDefault": false
+        },
+        {
+          "name": "load_meta",
+          "line": 121,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "queue.Queue",
+          "lineNumber": 35
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Thread",
+          "lineNumber": 37
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.t.start",
+          "lineNumber": 38
+        },
+        {
+          "caller": "put",
+          "callee": "self.q.full",
+          "lineNumber": 42
+        },
+        {
+          "caller": "put",
+          "callee": "time.time",
+          "lineNumber": 43
+        },
+        {
+          "caller": "put",
+          "callee": "print",
+          "lineNumber": 45
+        },
+        {
+          "caller": "put",
+          "callee": "self.q.put",
+          "lineNumber": 48
+        },
+        {
+          "caller": "put",
+          "callee": "str",
+          "lineNumber": 48
+        },
+        {
+          "caller": "_run",
+          "callee": "self.q.get",
+          "lineNumber": 52
+        },
+        {
+          "caller": "_run",
+          "callee": "cv2.imwrite",
+          "lineNumber": 57
+        },
+        {
+          "caller": "_run",
+          "callee": "print",
+          "lineNumber": 59
+        },
+        {
+          "caller": "_run",
+          "callee": "self.q.task_done",
+          "lineNumber": 61
+        },
+        {
+          "caller": "drain",
+          "callee": "self.q.get_nowait",
+          "lineNumber": 68
+        },
+        {
+          "caller": "drain",
+          "callee": "self.q.task_done",
+          "lineNumber": 72
+        },
+        {
+          "caller": "drain",
+          "callee": "self.q.join",
+          "lineNumber": 73
+        },
+        {
+          "caller": "flush",
+          "callee": "self.q.join",
+          "lineNumber": 77
+        },
+        {
+          "caller": "close",
+          "callee": "self.flush",
+          "lineNumber": 81
+        },
+        {
+          "caller": "close",
+          "callee": "self.q.put",
+          "lineNumber": 82
+        },
+        {
+          "caller": "close",
+          "callee": "self.t.join",
+          "lineNumber": 83
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "cv2.imread",
+          "lineNumber": 89
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "str",
+          "lineNumber": 89
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "cv2.imread",
+          "lineNumber": 91
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "str",
+          "lineNumber": 91
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "o3d.t.geometry.Image(depth_np.astype(np.uint16)).to",
+          "lineNumber": 94
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "o3d.t.geometry.Image",
+          "lineNumber": 94
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "depth_np.astype",
+          "lineNumber": 94
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "o3d.t.geometry.Image(\n        np.ascontiguousarray(color_bgr[:, :, ::-1])).to",
+          "lineNumber": 95
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "o3d.t.geometry.Image",
+          "lineNumber": 95
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "np.ascontiguousarray",
+          "lineNumber": 96
+        },
+        {
+          "caller": "load_rgbd",
+          "callee": "o3d.t.geometry.RGBDImage",
+          "lineNumber": 97
+        },
+        {
+          "caller": "build_meta",
+          "callee": "intrinsic.numpy",
+          "lineNumber": 103
+        },
+        {
+          "caller": "save_meta",
+          "callee": "open",
+          "lineNumber": 117
+        },
+        {
+          "caller": "save_meta",
+          "callee": "json.dump",
+          "lineNumber": 118
+        },
+        {
+          "caller": "save_meta",
+          "callee": "build_meta",
+          "lineNumber": 118
+        },
+        {
+          "caller": "load_meta",
+          "callee": "open",
+          "lineNumber": 123
+        },
+        {
+          "caller": "load_meta",
+          "callee": "json.load",
+          "lineNumber": 124
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "scanner/mapping.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 88,
+      "nonEmptyLines": 76,
+      "functions": [
+        {
+          "name": "extract_cloud",
+          "startLine": 19,
+          "endLine": 22,
+          "params": [
+            "vbg",
+            "weight_threshold"
+          ]
+        },
+        {
+          "name": "save_cloud",
+          "startLine": 25,
+          "endLine": 51,
+          "params": [
+            "vbg",
+            "path",
+            "mesh",
+            "clean"
+          ]
+        },
+        {
+          "name": "refine",
+          "startLine": 54,
+          "endLine": 88,
+          "params": [
+            "frames_dir",
+            "poses",
+            "intrinsic",
+            "depth_scale",
+            "args",
+            "device"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "extract_cloud",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "save_cloud",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "refine",
+          "line": 54,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "extract_cloud",
+          "callee": "vbg.extract_point_cloud",
+          "lineNumber": 21
+        },
+        {
+          "caller": "extract_cloud",
+          "callee": "pcd.to",
+          "lineNumber": 22
+        },
+        {
+          "caller": "extract_cloud",
+          "callee": "o3c.Device",
+          "lineNumber": 22
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "extract_cloud(vbg).to_legacy",
+          "lineNumber": 37
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "extract_cloud",
+          "lineNumber": 37
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "len",
+          "lineNumber": 38
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "pcd.remove_statistical_outlier",
+          "lineNumber": 39
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "len",
+          "lineNumber": 40
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "print",
+          "lineNumber": 42
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "o3d.io.write_point_cloud",
+          "lineNumber": 44
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "str",
+          "lineNumber": 44
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "print",
+          "lineNumber": 45
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "Path(path).with_suffix",
+          "lineNumber": 47
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "Path",
+          "lineNumber": 47
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "vbg.extract_triangle_mesh(3.0).to(o3c.Device(\"CPU:0\")).to_legacy",
+          "lineNumber": 48
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "vbg.extract_triangle_mesh(3.0).to",
+          "lineNumber": 48
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "vbg.extract_triangle_mesh",
+          "lineNumber": 48
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "o3c.Device",
+          "lineNumber": 48
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "o3d.io.write_triangle_mesh",
+          "lineNumber": 49
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "str",
+          "lineNumber": 49
+        },
+        {
+          "caller": "save_cloud",
+          "callee": "print",
+          "lineNumber": 50
+        },
+        {
+          "caller": "refine",
+          "callee": "len",
+          "lineNumber": 62
+        },
+        {
+          "caller": "refine",
+          "callee": "print",
+          "lineNumber": 63
+        },
+        {
+          "caller": "refine",
+          "callee": "o3d.t.geometry.VoxelBlockGrid",
+          "lineNumber": 65
+        },
+        {
+          "caller": "refine",
+          "callee": "time.time",
+          "lineNumber": 70
+        },
+        {
+          "caller": "refine",
+          "callee": "range",
+          "lineNumber": 71
+        },
+        {
+          "caller": "refine",
+          "callee": "cv2.imread",
+          "lineNumber": 72
+        },
+        {
+          "caller": "refine",
+          "callee": "str",
+          "lineNumber": 72
+        },
+        {
+          "caller": "refine",
+          "callee": "cv2.imread",
+          "lineNumber": 74
+        },
+        {
+          "caller": "refine",
+          "callee": "str",
+          "lineNumber": 74
+        },
+        {
+          "caller": "refine",
+          "callee": "o3d.t.geometry.Image(depth_np.astype(np.uint16)).to",
+          "lineNumber": 77
+        },
+        {
+          "caller": "refine",
+          "callee": "o3d.t.geometry.Image",
+          "lineNumber": 77
+        },
+        {
+          "caller": "refine",
+          "callee": "depth_np.astype",
+          "lineNumber": 77
+        },
+        {
+          "caller": "refine",
+          "callee": "o3d.t.geometry.Image(\n            np.ascontiguousarray(color_bgr[:, :, ::-1])).to",
+          "lineNumber": 78
+        },
+        {
+          "caller": "refine",
+          "callee": "o3d.t.geometry.Image",
+          "lineNumber": 78
+        },
+        {
+          "caller": "refine",
+          "callee": "np.ascontiguousarray",
+          "lineNumber": 79
+        },
+        {
+          "caller": "refine",
+          "callee": "o3c.Tensor",
+          "lineNumber": 80
+        },
+        {
+          "caller": "refine",
+          "callee": "np.linalg.inv",
+          "lineNumber": 80
+        },
+        {
+          "caller": "refine",
+          "callee": "vbg.compute_unique_block_coordinates",
+          "lineNumber": 81
+        },
+        {
+          "caller": "refine",
+          "callee": "vbg.integrate",
+          "lineNumber": 83
+        },
+        {
+          "caller": "refine",
+          "callee": "print",
+          "lineNumber": 87
+        },
+        {
+          "caller": "refine",
+          "callee": "time.time",
+          "lineNumber": 87
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scanner/pipeline.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 71,
+      "nonEmptyLines": 60,
+      "functions": [
+        {
+          "name": "offline_pipeline",
+          "startLine": 22,
+          "endLine": 38,
+          "params": [
+            "frames_dir",
+            "poses",
+            "intrinsic",
+            "depth_scale",
+            "args",
+            "device"
+          ]
+        },
+        {
+          "name": "view_result",
+          "startLine": 41,
+          "endLine": 45,
+          "params": [
+            "path"
+          ]
+        },
+        {
+          "name": "refine_only",
+          "startLine": 48,
+          "endLine": 71,
+          "params": [
+            "args",
+            "device"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "offline_pipeline",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "view_result",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "refine_only",
+          "line": 48,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "offline_pipeline",
+          "callee": "len",
+          "lineNumber": 29
+        },
+        {
+          "caller": "offline_pipeline",
+          "callee": "optimize_trajectory",
+          "lineNumber": 31
+        },
+        {
+          "caller": "offline_pipeline",
+          "callee": "print",
+          "lineNumber": 34
+        },
+        {
+          "caller": "offline_pipeline",
+          "callee": "np.save",
+          "lineNumber": 36
+        },
+        {
+          "caller": "offline_pipeline",
+          "callee": "Path(args.output).with_suffix",
+          "lineNumber": 36
+        },
+        {
+          "caller": "offline_pipeline",
+          "callee": "Path",
+          "lineNumber": 36
+        },
+        {
+          "caller": "offline_pipeline",
+          "callee": "np.stack",
+          "lineNumber": 36
+        },
+        {
+          "caller": "offline_pipeline",
+          "callee": "refine",
+          "lineNumber": 37
+        },
+        {
+          "caller": "offline_pipeline",
+          "callee": "save_cloud",
+          "lineNumber": 38
+        },
+        {
+          "caller": "view_result",
+          "callee": "o3d.io.read_point_cloud",
+          "lineNumber": 43
+        },
+        {
+          "caller": "view_result",
+          "callee": "str",
+          "lineNumber": 43
+        },
+        {
+          "caller": "view_result",
+          "callee": "o3d.visualization.draw_geometries",
+          "lineNumber": 44
+        },
+        {
+          "caller": "refine_only",
+          "callee": "Path",
+          "lineNumber": 51
+        },
+        {
+          "caller": "refine_only",
+          "callee": "meta_path.exists",
+          "lineNumber": 54
+        },
+        {
+          "caller": "refine_only",
+          "callee": "poses_path.exists",
+          "lineNumber": 54
+        },
+        {
+          "caller": "refine_only",
+          "callee": "sys.exit",
+          "lineNumber": 55
+        },
+        {
+          "caller": "refine_only",
+          "callee": "load_meta",
+          "lineNumber": 57
+        },
+        {
+          "caller": "refine_only",
+          "callee": "o3c.Tensor",
+          "lineNumber": 58
+        },
+        {
+          "caller": "refine_only",
+          "callee": "list",
+          "lineNumber": 63
+        },
+        {
+          "caller": "refine_only",
+          "callee": "np.load",
+          "lineNumber": 63
+        },
+        {
+          "caller": "refine_only",
+          "callee": "len",
+          "lineNumber": 66
+        },
+        {
+          "caller": "refine_only",
+          "callee": "list",
+          "lineNumber": 66
+        },
+        {
+          "caller": "refine_only",
+          "callee": "frames_dir.glob",
+          "lineNumber": 66
+        },
+        {
+          "caller": "refine_only",
+          "callee": "print",
+          "lineNumber": 68
+        },
+        {
+          "caller": "refine_only",
+          "callee": "len",
+          "lineNumber": 68
+        },
+        {
+          "caller": "refine_only",
+          "callee": "offline_pipeline",
+          "lineNumber": 69
+        },
+        {
+          "caller": "refine_only",
+          "callee": "view_result",
+          "lineNumber": 71
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scanner/tracking.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 42,
+      "functions": [
+        {
+          "name": "odo_criteria",
+          "startLine": 17,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "rgbd_odometry",
+          "startLine": 28,
+          "endLine": 52,
+          "params": [
+            "src_rgbd",
+            "tgt_rgbd",
+            "intrinsic",
+            "init",
+            "depth_scale",
+            "depth_max"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "odo_criteria",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "rgbd_odometry",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "odo_criteria",
+          "callee": "C",
+          "lineNumber": 24
+        },
+        {
+          "caller": "odo_criteria",
+          "callee": "C",
+          "lineNumber": 24
+        },
+        {
+          "caller": "odo_criteria",
+          "callee": "C",
+          "lineNumber": 24
+        },
+        {
+          "caller": "rgbd_odometry",
+          "callee": "o3d.t.pipelines.odometry.rgbd_odometry_multi_scale",
+          "lineNumber": 48
+        },
+        {
+          "caller": "rgbd_odometry",
+          "callee": "o3c.Tensor",
+          "lineNumber": 50
+        },
+        {
+          "caller": "rgbd_odometry",
+          "callee": "odo_criteria",
+          "lineNumber": 51
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    }
+  ]
+}

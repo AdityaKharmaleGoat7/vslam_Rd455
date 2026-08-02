@@ -1,0 +1,720 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 4,
+  "filesSkipped": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 4,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 4,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "scanner/config.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 59,
+      "nonEmptyLines": 45,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scanner/imu.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 94,
+      "nonEmptyLines": 80,
+      "functions": [
+        {
+          "name": "start_imu",
+          "startLine": 69,
+          "endLine": 94,
+          "params": [
+            "color_stream_profile"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "GyroIntegrator",
+          "startLine": 21,
+          "endLine": 66,
+          "methods": [
+            "__init__",
+            "callback",
+            "pop_prior",
+            "reset"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GyroIntegrator",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "start_imu",
+          "line": 69,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 30
+        },
+        {
+          "caller": "__init__",
+          "callee": "np.eye",
+          "lineNumber": 31
+        },
+        {
+          "caller": "__init__",
+          "callee": "np.eye",
+          "lineNumber": 33
+        },
+        {
+          "caller": "callback",
+          "callee": "frame.as_motion_frame",
+          "lineNumber": 37
+        },
+        {
+          "caller": "callback",
+          "callee": "m.get_motion_data",
+          "lineNumber": 40
+        },
+        {
+          "caller": "callback",
+          "callee": "m.get_timestamp",
+          "lineNumber": 41
+        },
+        {
+          "caller": "callback",
+          "callee": "min",
+          "lineNumber": 44
+        },
+        {
+          "caller": "callback",
+          "callee": "max",
+          "lineNumber": 44
+        },
+        {
+          "caller": "callback",
+          "callee": "so3_exp",
+          "lineNumber": 45
+        },
+        {
+          "caller": "callback",
+          "callee": "np.array",
+          "lineNumber": 45
+        },
+        {
+          "caller": "pop_prior",
+          "callee": "np.eye",
+          "lineNumber": 54
+        },
+        {
+          "caller": "pop_prior",
+          "callee": "rotation_angle_deg",
+          "lineNumber": 56
+        },
+        {
+          "caller": "pop_prior",
+          "callee": "np.eye",
+          "lineNumber": 57
+        },
+        {
+          "caller": "pop_prior",
+          "callee": "np.eye",
+          "lineNumber": 58
+        },
+        {
+          "caller": "reset",
+          "callee": "np.eye",
+          "lineNumber": 66
+        },
+        {
+          "caller": "start_imu",
+          "callee": "GyroIntegrator",
+          "lineNumber": 78
+        },
+        {
+          "caller": "start_imu",
+          "callee": "rs.pipeline",
+          "lineNumber": 79
+        },
+        {
+          "caller": "start_imu",
+          "callee": "rs.config",
+          "lineNumber": 80
+        },
+        {
+          "caller": "start_imu",
+          "callee": "cfg.enable_stream",
+          "lineNumber": 81
+        },
+        {
+          "caller": "start_imu",
+          "callee": "imu_pipe.start",
+          "lineNumber": 82
+        },
+        {
+          "caller": "start_imu",
+          "callee": "profile.get_stream(rs.stream.gyro).get_extrinsics_to",
+          "lineNumber": 84
+        },
+        {
+          "caller": "start_imu",
+          "callee": "profile.get_stream",
+          "lineNumber": 84
+        },
+        {
+          "caller": "start_imu",
+          "callee": "np.asarray(ext.rotation, np.float64).reshape",
+          "lineNumber": 87
+        },
+        {
+          "caller": "start_imu",
+          "callee": "np.asarray",
+          "lineNumber": 87
+        },
+        {
+          "caller": "start_imu",
+          "callee": "print",
+          "lineNumber": 90
+        },
+        {
+          "caller": "start_imu",
+          "callee": "print",
+          "lineNumber": 93
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "scanner/posegraph.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 152,
+      "nonEmptyLines": 135,
+      "functions": [
+        {
+          "name": "select_keyframes",
+          "startLine": 23,
+          "endLine": 36,
+          "params": [
+            "poses",
+            "every",
+            "trans_thr",
+            "rot_thr_deg"
+          ]
+        },
+        {
+          "name": "optimize_trajectory",
+          "startLine": 39,
+          "endLine": 152,
+          "params": [
+            "frames_dir",
+            "poses",
+            "intrinsic",
+            "depth_scale",
+            "args",
+            "device"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "select_keyframes",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "optimize_trajectory",
+          "line": 39,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "select_keyframes",
+          "callee": "range",
+          "lineNumber": 28
+        },
+        {
+          "caller": "select_keyframes",
+          "callee": "len",
+          "lineNumber": 28
+        },
+        {
+          "caller": "select_keyframes",
+          "callee": "np.linalg.inv",
+          "lineNumber": 29
+        },
+        {
+          "caller": "select_keyframes",
+          "callee": "np.linalg.norm",
+          "lineNumber": 31
+        },
+        {
+          "caller": "select_keyframes",
+          "callee": "rotation_angle_deg",
+          "lineNumber": 32
+        },
+        {
+          "caller": "select_keyframes",
+          "callee": "kf.append",
+          "lineNumber": 33
+        },
+        {
+          "caller": "select_keyframes",
+          "callee": "len",
+          "lineNumber": 34
+        },
+        {
+          "caller": "select_keyframes",
+          "callee": "kf.append",
+          "lineNumber": 35
+        },
+        {
+          "caller": "select_keyframes",
+          "callee": "len",
+          "lineNumber": 35
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "np.asarray",
+          "lineNumber": 54
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "select_keyframes",
+          "lineNumber": 55
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "print",
+          "lineNumber": 56
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "len",
+          "lineNumber": 56
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "len",
+          "lineNumber": 56
+        },
+        {
+          "caller": "rgbd",
+          "callee": "len",
+          "lineNumber": 62
+        },
+        {
+          "caller": "rgbd",
+          "callee": "cache.pop",
+          "lineNumber": 63
+        },
+        {
+          "caller": "rgbd",
+          "callee": "next",
+          "lineNumber": 63
+        },
+        {
+          "caller": "rgbd",
+          "callee": "iter",
+          "lineNumber": 63
+        },
+        {
+          "caller": "rgbd",
+          "callee": "load_rgbd",
+          "lineNumber": 64
+        },
+        {
+          "caller": "info_matrix",
+          "callee": "o3d.t.pipelines.odometry.compute_odometry_information_matrix(\n                src.depth, tgt.depth, intrinsic,\n                o3c.Tensor(trans, o3c.Dtype.Float64),\n                0.07, depth_scale, args.depth_max).numpy",
+          "lineNumber": 69
+        },
+        {
+          "caller": "info_matrix",
+          "callee": "o3d.t.pipelines.odometry.compute_odometry_information_matrix",
+          "lineNumber": 69
+        },
+        {
+          "caller": "info_matrix",
+          "callee": "o3c.Tensor",
+          "lineNumber": 71
+        },
+        {
+          "caller": "info_matrix",
+          "callee": "np.eye",
+          "lineNumber": 74
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "reg.PoseGraph",
+          "lineNumber": 76
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "pg.nodes.append",
+          "lineNumber": 78
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "reg.PoseGraphNode",
+          "lineNumber": 78
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "range",
+          "lineNumber": 81
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "len",
+          "lineNumber": 81
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "np.linalg.inv",
+          "lineNumber": 83
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "rgbd",
+          "lineNumber": 84
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "rgbd",
+          "lineNumber": 84
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "np.eye",
+          "lineNumber": 85
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "rgbd_odometry",
+          "lineNumber": 88
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "res.transformation.numpy",
+          "lineNumber": 91
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "info_matrix",
+          "lineNumber": 92
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "pg.edges.append",
+          "lineNumber": 95
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "reg.PoseGraphEdge",
+          "lineNumber": 95
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "range",
+          "lineNumber": 100
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "len",
+          "lineNumber": 100
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "range",
+          "lineNumber": 101
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "len",
+          "lineNumber": 101
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "np.linalg.norm",
+          "lineNumber": 104
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "candidates.append",
+          "lineNumber": 106
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "candidates.sort",
+          "lineNumber": 107
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "rgbd",
+          "lineNumber": 111
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "rgbd",
+          "lineNumber": 111
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "np.linalg.inv",
+          "lineNumber": 114
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "rgbd_odometry",
+          "lineNumber": 116
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "res.transformation.numpy",
+          "lineNumber": 122
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "pg.edges.append",
+          "lineNumber": 123
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "reg.PoseGraphEdge",
+          "lineNumber": 123
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "info_matrix",
+          "lineNumber": 124
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "print",
+          "lineNumber": 127
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "len",
+          "lineNumber": 128
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "reg.GlobalOptimizationOption",
+          "lineNumber": 130
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "o3d.utility.VerbosityContextManager",
+          "lineNumber": 135
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "reg.global_optimization",
+          "lineNumber": 136
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "reg.GlobalOptimizationLevenbergMarquardt",
+          "lineNumber": 137
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "reg.GlobalOptimizationConvergenceCriteria",
+          "lineNumber": 138
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "np.linalg.inv",
+          "lineNumber": 141
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "range",
+          "lineNumber": 142
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "len",
+          "lineNumber": 142
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "list",
+          "lineNumber": 143
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "range",
+          "lineNumber": 144
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "len",
+          "lineNumber": 144
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "range",
+          "lineNumber": 146
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "max",
+          "lineNumber": 147
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "interp_transform",
+          "lineNumber": 148
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "np.linalg.norm",
+          "lineNumber": 150
+        },
+        {
+          "caller": "optimize_trajectory",
+          "callee": "print",
+          "lineNumber": 151
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scanner/transforms.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 22,
+      "functions": [
+        {
+          "name": "so3_exp",
+          "startLine": 7,
+          "endLine": 9,
+          "params": [
+            "rvec"
+          ]
+        },
+        {
+          "name": "rotation_angle_deg",
+          "startLine": 12,
+          "endLine": 15,
+          "params": [
+            "R"
+          ]
+        },
+        {
+          "name": "interp_transform",
+          "startLine": 18,
+          "endLine": 30,
+          "params": [
+            "Ta",
+            "Tb",
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "so3_exp",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "rotation_angle_deg",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "interp_transform",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "so3_exp",
+          "callee": "cv2.Rodrigues",
+          "lineNumber": 9
+        },
+        {
+          "caller": "so3_exp",
+          "callee": "np.asarray",
+          "lineNumber": 9
+        },
+        {
+          "caller": "rotation_angle_deg",
+          "callee": "np.clip",
+          "lineNumber": 14
+        },
+        {
+          "caller": "rotation_angle_deg",
+          "callee": "np.trace",
+          "lineNumber": 14
+        },
+        {
+          "caller": "rotation_angle_deg",
+          "callee": "np.degrees",
+          "lineNumber": 15
+        },
+        {
+          "caller": "rotation_angle_deg",
+          "callee": "np.arccos",
+          "lineNumber": 15
+        },
+        {
+          "caller": "interp_transform",
+          "callee": "cv2.Rodrigues",
+          "lineNumber": 26
+        },
+        {
+          "caller": "interp_transform",
+          "callee": "np.eye",
+          "lineNumber": 27
+        },
+        {
+          "caller": "interp_transform",
+          "callee": "so3_exp",
+          "lineNumber": 28
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    }
+  ]
+}

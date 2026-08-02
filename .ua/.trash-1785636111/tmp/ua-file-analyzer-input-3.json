@@ -1,0 +1,13 @@
+{
+  "projectRoot": "/home/aditya/Documents/Demo/vslam_Rd455",
+  "batchFiles": [
+    {"path": "realtime_pointcloud.py", "language": "python", "sizeLines": 16, "fileCategory": "code"},
+    {"path": "scanner/__main__.py", "language": "python", "sizeLines": 6, "fileCategory": "code"},
+    {"path": "scanner/cli.py", "language": "python", "sizeLines": 101, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "realtime_pointcloud.py": ["scanner/cli.py"],
+    "scanner/__main__.py": ["scanner/cli.py"],
+    "scanner/cli.py": []
+  }
+}

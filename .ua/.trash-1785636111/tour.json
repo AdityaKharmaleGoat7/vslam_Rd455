@@ -1,0 +1,81 @@
+[
+  {
+    "order": 1,
+    "title": "Project Overview",
+    "description": "Start with the README to understand what this project does: a handheld realtime RGB-D 3D scanner for the Intel RealSense D455 that fuses dense SLAM tracking with TSDF volume integration, then refines the result offline with pose-graph optimization. It lays out the two-phase design philosophy (realtime capture, then offline refinement) that every module in this tour will map onto, plus the project's requirements, key bindings, and output files.",
+    "nodeIds": ["document:README.md"]
+  },
+  {
+    "order": 2,
+    "title": "Package Root and Packaging Config",
+    "description": "The scanner package's __init__.py docstring documents the two-phase pipeline described in the README and maps out what every submodule is responsible for, making it the code-level table of contents. pyproject.toml configures this package for distribution, declaring its dependencies and registering the d455-scan console-script entry point that maps straight to scanner.cli:main.",
+    "nodeIds": ["file:scanner/__init__.py", "config:pyproject.toml"],
+    "languageLesson": "Python's pyproject.toml [project.scripts] table wires a shell command (d455-scan) to a Python callable (scanner.cli:main), so pip-installing the package also installs a runnable CLI binary."
+  },
+  {
+    "order": 3,
+    "title": "Entry Points",
+    "description": "Two files let you launch the scanner: scanner/__main__.py enables `python -m scanner`, the standard way to run a Python package as a script, while realtime_pointcloud.py is a thin backwards-compatible entry point kept at the project root for users who ran the tool before it became a package. Both simply delegate to scanner.cli.main, keeping all real logic in one place.",
+    "nodeIds": ["file:scanner/__main__.py", "file:realtime_pointcloud.py"],
+    "languageLesson": "The __main__.py convention lets a package be executable directly (`python -m scanner`); Python looks for this file automatically when a package name is passed to -m."
+  },
+  {
+    "order": 4,
+    "title": "Command-Line Interface",
+    "description": "cli.py is where a scan actually begins: it defines every tunable CLI argument (voxel sizes, depth range, keyframe thresholds, IMU/mesh/view toggles) and its main() function dispatches to one of two paths — a full realtime CaptureSession, or an offline refine_only pass over previously recorded frames. This dispatch is the fork point that separates the two phases you read about in the README.",
+    "nodeIds": ["file:scanner/cli.py"],
+    "languageLesson": "argparse-based CLIs centralize all user-tunable knobs in one file, so the rest of the codebase can treat these values as plain function parameters instead of re-parsing arguments everywhere."
+  },
+  {
+    "order": 5,
+    "title": "Realtime Capture Session",
+    "description": "capture.py defines CaptureSession, the highest fan-out module in the codebase — it orchestrates camera and IMU acquisition, IMU-primed frame-to-model tracking with relocalization, TSDF integration, and background frame recording, then crash-safely hands off to offline refinement on finalize. This is the beating heart of the live scanning loop that cli.py invokes.",
+    "nodeIds": ["file:scanner/capture.py"]
+  },
+  {
+    "order": 6,
+    "title": "Sensor Acquisition: Camera and IMU",
+    "description": "camera.py drives the RealSense D455's depth+color streaming, builds the depth post-processing filter chain, and locks auto-exposure/white-balance so TSDF colors stay consistent across a scan. imu.py runs a separate librealsense pipeline for the motion module, accumulating high-rate gyro samples between video frames into a rotation prior that primes the tracker — both are imported directly by CaptureSession from Step 5.",
+    "nodeIds": ["file:scanner/camera.py", "file:scanner/imu.py"],
+    "languageLesson": "Running the IMU on its own librealsense pipeline, separate from the video stream, lets high-rate gyro samples (hundreds of Hz) be captured without being bottlenecked by the much slower depth/color frame rate."
+  },
+  {
+    "order": 7,
+    "title": "Odometry Engine and Tuning Constants",
+    "description": "tracking.py wraps Open3D's multi-scale hybrid RGBD odometry with tuned convergence criteria; it's shared by realtime tracking, relocalization, and the offline pose graph from Step 9, so any code path needing frame-to-frame alignment goes through here. config.py holds the module-level constants that govern tracking health, relocalization, loop closure, and IMU integration, each documented with guidance on what to adjust first when adapting the scanner to a new environment.",
+    "nodeIds": ["file:scanner/tracking.py", "file:scanner/config.py"]
+  },
+  {
+    "order": 8,
+    "title": "Offline Refinement Pipeline",
+    "description": "pipeline.py is the second phase's orchestrator, shared by both live capture's finalize step and the standalone --refine-only CLI mode. It optimizes the tracked trajectory via pose-graph optimization, re-integrates every recorded frame at a finer voxel resolution, and saves the final point cloud — it can even rebuild a whole scan from a previous session's frames directory without touching the camera.",
+    "nodeIds": ["file:scanner/pipeline.py"]
+  },
+  {
+    "order": 9,
+    "title": "Pose Graph and Loop Closure",
+    "description": "posegraph.py is what makes the offline phase worth running: it builds a keyframe pose graph with odometry edges between consecutive keyframes plus loop-closure edges between spatially close but temporally distant keyframes, then optimizes it to remove accumulated drift. The corrected keyframe poses are then propagated onto every in-between frame via interpolation, which is why every frame — not just keyframes — ends up better aligned.",
+    "nodeIds": ["file:scanner/posegraph.py"],
+    "languageLesson": "Pose-graph optimization treats camera poses as graph nodes and relative-motion measurements as edges; adding loop-closure edges when the camera revisits a place gives the optimizer extra constraints that cancel out accumulated drift, the same principle behind full SLAM back-ends like g2o and Ceres."
+  },
+  {
+    "order": 10,
+    "title": "SO(3)/SE(3) Math Helpers",
+    "description": "transforms.py provides the small rotation and rigid-transform math that posegraph.py (Step 9) and imu.py (Step 6) both depend on: a rotation-vector exponential map, geodesic rotation angle, and rigid-transform interpolation, all built directly on cv2.Rodrigues instead of pulling in scipy. It's a good example of how the project favors minimal dependencies over general-purpose math libraries.",
+    "nodeIds": ["file:scanner/transforms.py"],
+    "languageLesson": "The exponential map converts a 3D rotation vector (axis * angle) into a rotation matrix via Rodrigues' formula; interpolating between two poses this way (a simplified slerp) gives smooth, geometrically correct in-between rotations rather than naive linear blending."
+  },
+  {
+    "order": 11,
+    "title": "Frame and Metadata I/O",
+    "description": "frameio.py's FrameWriter saves depth/color PNGs and JPEGs on a background thread so disk writes never block the realtime tracking loop in capture.py, and it also provides the loaders that pipeline.py and posegraph.py use to read those recorded frames back during offline refinement. It's the bridge connecting what gets written during Step 5's live capture to what gets read during Steps 8-9's offline pass.",
+    "nodeIds": ["file:scanner/frameio.py"],
+    "languageLesson": "Offloading disk I/O to a background thread with a queue is a classic producer-consumer pattern: the tracking loop stays real-time responsive while writes happen asynchronously, at the cost of needing crash-safe finalization to flush any pending frames."
+  },
+  {
+    "order": 12,
+    "title": "TSDF Mapping and Export",
+    "description": "mapping.py operates on the TSDF voxel block grid at both ends of the pipeline: during live capture it does coarse integration for real-time feedback, and during offline refinement (Step 8) it re-fuses every recorded frame at a finer voxel resolution before extracting and exporting the final point cloud in 8-bit-RGB legacy format for compatibility with external viewers like MeshLab or CloudCompare.",
+    "nodeIds": ["file:scanner/mapping.py"]
+  }
+]

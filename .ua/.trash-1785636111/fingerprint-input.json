@@ -1,0 +1,24 @@
+{
+  "projectRoot": "/home/aditya/Documents/Demo/vslam_Rd455",
+  "sourceFilePaths": [
+    ".ua/.understandignore",
+    ".ua/config.json",
+    "README.md",
+    "pyproject.toml",
+    "realtime_pointcloud.py",
+    "scanner/__init__.py",
+    "scanner/__main__.py",
+    "scanner/camera.py",
+    "scanner/capture.py",
+    "scanner/cli.py",
+    "scanner/config.py",
+    "scanner/frameio.py",
+    "scanner/imu.py",
+    "scanner/mapping.py",
+    "scanner/pipeline.py",
+    "scanner/posegraph.py",
+    "scanner/tracking.py",
+    "scanner/transforms.py"
+  ],
+  "gitCommitHash": "4191a8c213cb65766f0eafade9a75913753ea2df"
+}

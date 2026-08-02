@@ -1,0 +1,171 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 4,
+  "filesSkipped": [
+    ".ua/.understandignore"
+  ],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 4,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 1,
+      "failed": 0,
+      "skipped": 3
+    }
+  },
+  "results": [
+    {
+      "path": ".ua/config.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "sections": [
+        {
+          "heading": "outputLanguage",
+          "level": 1,
+          "line": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 170,
+      "nonEmptyLines": 134,
+      "sections": [
+        {
+          "heading": "D455 Scanner — Realtime RGB-D Point Cloud Scanner",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Demo",
+          "level": 2,
+          "line": 17
+        },
+        {
+          "heading": "Requirements",
+          "level": 2,
+          "line": 24
+        },
+        {
+          "heading": "Run",
+          "level": 2,
+          "line": 31
+        },
+        {
+          "heading": "Useful options",
+          "level": 2,
+          "line": 48
+        },
+        {
+          "heading": "Outputs",
+          "level": 2,
+          "line": 72
+        },
+        {
+          "heading": "Crash recovery / reprocessing",
+          "level": 2,
+          "line": 81
+        },
+        {
+          "heading": "Project layout",
+          "level": 2,
+          "line": 91
+        },
+        {
+          "heading": "How it works",
+          "level": 2,
+          "line": 109
+        },
+        {
+          "heading": "Tuning",
+          "level": 2,
+          "line": 132
+        },
+        {
+          "heading": "Scanning tips",
+          "level": 2,
+          "line": 148
+        },
+        {
+          "heading": "Low-RAM notes",
+          "level": 2,
+          "line": 159
+        },
+        {
+          "heading": "Why not SfM/MVS?",
+          "level": 2,
+          "line": 166
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 13
+      }
+    },
+    {
+      "path": "pyproject.toml",
+      "language": "toml",
+      "fileCategory": "config",
+      "totalLines": 22,
+      "nonEmptyLines": 19,
+      "sections": [
+        {
+          "heading": "build-system",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "project",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "project.scripts",
+          "level": 2,
+          "line": 18
+        },
+        {
+          "heading": "tool.setuptools",
+          "level": 2,
+          "line": 21
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "scanner/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 26,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

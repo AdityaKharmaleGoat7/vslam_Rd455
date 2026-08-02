@@ -1,0 +1,69 @@
+[
+  {
+    "id": "layer:entry-points",
+    "name": "CLI & Entry Points",
+    "description": "The three ways to launch the D455 scanner (console script via cli.py, `python -m scanner`, and the standalone root script) plus the package root that documents the overall two-phase pipeline.",
+    "nodeIds": [
+      "file:scanner/cli.py",
+      "file:scanner/__main__.py",
+      "file:realtime_pointcloud.py",
+      "file:scanner/__init__.py"
+    ]
+  },
+  {
+    "id": "layer:sensor-io",
+    "name": "Sensor & Camera I/O",
+    "description": "Direct interfaces to the RealSense D455 hardware: the depth/color video pipeline with post-processing and exposure locking, and the IMU motion-module pipeline that primes tracking with a rotation prior.",
+    "nodeIds": [
+      "file:scanner/camera.py",
+      "file:scanner/imu.py"
+    ]
+  },
+  {
+    "id": "layer:tracking-capture",
+    "name": "Realtime Capture & Tracking",
+    "description": "The live realtime capture loop (CaptureSession) that orchestrates camera and IMU acquisition, frame-to-model tracking, relocalization, and TSDF integration, along with the shared RGB-D odometry helper it relies on.",
+    "nodeIds": [
+      "file:scanner/capture.py",
+      "file:scanner/tracking.py"
+    ]
+  },
+  {
+    "id": "layer:offline-reconstruction",
+    "name": "Offline Reconstruction Pipeline",
+    "description": "Post-capture refinement of a scan: pose-graph construction and optimization with loop closure, TSDF re-integration at finer voxel resolution, and point cloud/mesh export.",
+    "nodeIds": [
+      "file:scanner/pipeline.py",
+      "file:scanner/posegraph.py",
+      "file:scanner/mapping.py"
+    ]
+  },
+  {
+    "id": "layer:shared-utility",
+    "name": "Shared Utilities & Configuration",
+    "description": "Cross-cutting support modules used by both the realtime capture path and the offline pipeline: threaded frame/metadata persistence, tuning constants, and SO(3)/SE(3) math helpers.",
+    "nodeIds": [
+      "file:scanner/frameio.py",
+      "file:scanner/config.py",
+      "file:scanner/transforms.py"
+    ]
+  },
+  {
+    "id": "layer:documentation",
+    "name": "Documentation & Packaging",
+    "description": "Project-level documentation and Python packaging metadata describing how to install, run, and understand the D455 scanner.",
+    "nodeIds": [
+      "document:README.md",
+      "config:pyproject.toml"
+    ]
+  },
+  {
+    "id": "layer:tooling-artifacts",
+    "name": "Tooling / Analysis Artifacts",
+    "description": "Configuration and ignore-list files belonging to the Understand-Anything analysis tool itself, unrelated to the D455 scanner's own architecture.",
+    "nodeIds": [
+      "file:.ua/.understandignore",
+      "config:.ua/config.json"
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "projectRoot": "/home/aditya/Documents/Demo/vslam_Rd455",
+  "batchFiles": [
+    {"path": "scanner/config.py", "language": "python", "sizeLines": 59, "fileCategory": "code"},
+    {"path": "scanner/imu.py", "language": "python", "sizeLines": 94, "fileCategory": "code"},
+    {"path": "scanner/posegraph.py", "language": "python", "sizeLines": 152, "fileCategory": "code"},
+    {"path": "scanner/transforms.py", "language": "python", "sizeLines": 30, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "scanner/config.py": [],
+    "scanner/imu.py": ["scanner/config.py","scanner/transforms.py"],
+    "scanner/posegraph.py": ["scanner/config.py","scanner/frameio.py","scanner/tracking.py","scanner/transforms.py"],
+    "scanner/transforms.py": []
+  }
+}

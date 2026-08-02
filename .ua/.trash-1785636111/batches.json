@@ -1,0 +1,338 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 18,
+  "totalBatches": 4,
+  "exportsByPath": {
+    ".ua/.understandignore": [],
+    "realtime_pointcloud.py": [],
+    "scanner/__init__.py": [],
+    "scanner/__main__.py": [],
+    "scanner/camera.py": [
+      "start_camera",
+      "filter_and_align",
+      "lock_exposure"
+    ],
+    "scanner/capture.py": [
+      "CaptureSession"
+    ],
+    "scanner/cli.py": [
+      "parse_args",
+      "main"
+    ],
+    "scanner/config.py": [],
+    "scanner/frameio.py": [
+      "FrameWriter",
+      "load_rgbd",
+      "build_meta",
+      "save_meta",
+      "load_meta"
+    ],
+    "scanner/imu.py": [
+      "GyroIntegrator",
+      "start_imu"
+    ],
+    "scanner/mapping.py": [
+      "extract_cloud",
+      "save_cloud",
+      "refine"
+    ],
+    "scanner/pipeline.py": [
+      "offline_pipeline",
+      "view_result",
+      "refine_only"
+    ],
+    "scanner/posegraph.py": [
+      "select_keyframes",
+      "optimize_trajectory"
+    ],
+    "scanner/tracking.py": [
+      "odo_criteria",
+      "rgbd_odometry"
+    ],
+    "scanner/transforms.py": [
+      "so3_exp",
+      "rotation_angle_deg",
+      "interp_transform"
+    ]
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "scanner/camera.py",
+          "language": "python",
+          "sizeLines": 117,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scanner/capture.py",
+          "language": "python",
+          "sizeLines": 360,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scanner/frameio.py",
+          "language": "python",
+          "sizeLines": 124,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scanner/mapping.py",
+          "language": "python",
+          "sizeLines": 88,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scanner/pipeline.py",
+          "language": "python",
+          "sizeLines": 71,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scanner/tracking.py",
+          "language": "python",
+          "sizeLines": 52,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "scanner/camera.py": [],
+        "scanner/capture.py": [
+          "scanner/camera.py",
+          "scanner/config.py",
+          "scanner/frameio.py",
+          "scanner/imu.py",
+          "scanner/mapping.py",
+          "scanner/pipeline.py",
+          "scanner/tracking.py"
+        ],
+        "scanner/frameio.py": [],
+        "scanner/mapping.py": [],
+        "scanner/pipeline.py": [
+          "scanner/frameio.py",
+          "scanner/mapping.py",
+          "scanner/posegraph.py"
+        ],
+        "scanner/tracking.py": []
+      },
+      "neighborMap": {
+        "scanner/capture.py": [
+          {
+            "path": "scanner/config.py",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "scanner/imu.py",
+            "batchIndex": 2,
+            "symbols": [
+              "GyroIntegrator",
+              "start_imu"
+            ]
+          }
+        ],
+        "scanner/frameio.py": [
+          {
+            "path": "scanner/posegraph.py",
+            "batchIndex": 2,
+            "symbols": [
+              "select_keyframes",
+              "optimize_trajectory"
+            ]
+          }
+        ],
+        "scanner/pipeline.py": [
+          {
+            "path": "scanner/posegraph.py",
+            "batchIndex": 2,
+            "symbols": [
+              "select_keyframes",
+              "optimize_trajectory"
+            ]
+          }
+        ],
+        "scanner/tracking.py": [
+          {
+            "path": "scanner/posegraph.py",
+            "batchIndex": 2,
+            "symbols": [
+              "select_keyframes",
+              "optimize_trajectory"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "scanner/config.py",
+          "language": "python",
+          "sizeLines": 59,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scanner/imu.py",
+          "language": "python",
+          "sizeLines": 94,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scanner/posegraph.py",
+          "language": "python",
+          "sizeLines": 152,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scanner/transforms.py",
+          "language": "python",
+          "sizeLines": 30,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "scanner/config.py": [],
+        "scanner/imu.py": [
+          "scanner/config.py",
+          "scanner/transforms.py"
+        ],
+        "scanner/posegraph.py": [
+          "scanner/config.py",
+          "scanner/frameio.py",
+          "scanner/tracking.py",
+          "scanner/transforms.py"
+        ],
+        "scanner/transforms.py": []
+      },
+      "neighborMap": {
+        "scanner/config.py": [
+          {
+            "path": "scanner/capture.py",
+            "batchIndex": 1,
+            "symbols": [
+              "CaptureSession"
+            ]
+          }
+        ],
+        "scanner/imu.py": [
+          {
+            "path": "scanner/capture.py",
+            "batchIndex": 1,
+            "symbols": [
+              "CaptureSession"
+            ]
+          }
+        ],
+        "scanner/posegraph.py": [
+          {
+            "path": "scanner/frameio.py",
+            "batchIndex": 1,
+            "symbols": [
+              "FrameWriter",
+              "load_rgbd",
+              "build_meta",
+              "save_meta",
+              "load_meta"
+            ]
+          },
+          {
+            "path": "scanner/tracking.py",
+            "batchIndex": 1,
+            "symbols": [
+              "odo_criteria",
+              "rgbd_odometry"
+            ]
+          },
+          {
+            "path": "scanner/pipeline.py",
+            "batchIndex": 1,
+            "symbols": [
+              "offline_pipeline",
+              "view_result",
+              "refine_only"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": "realtime_pointcloud.py",
+          "language": "python",
+          "sizeLines": 16,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scanner/__main__.py",
+          "language": "python",
+          "sizeLines": 6,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scanner/cli.py",
+          "language": "python",
+          "sizeLines": 101,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "realtime_pointcloud.py": [
+          "scanner/cli.py"
+        ],
+        "scanner/__main__.py": [
+          "scanner/cli.py"
+        ],
+        "scanner/cli.py": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 4,
+      "files": [
+        {
+          "path": ".ua/.understandignore",
+          "language": "unknown",
+          "sizeLines": 69,
+          "fileCategory": "code"
+        },
+        {
+          "path": ".ua/config.json",
+          "language": "json",
+          "sizeLines": 1,
+          "fileCategory": "config"
+        },
+        {
+          "path": "README.md",
+          "language": "markdown",
+          "sizeLines": 170,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "pyproject.toml",
+          "language": "toml",
+          "sizeLines": 22,
+          "fileCategory": "config"
+        },
+        {
+          "path": "scanner/__init__.py",
+          "language": "python",
+          "sizeLines": 30,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        ".ua/.understandignore": [],
+        ".ua/config.json": [],
+        "README.md": [],
+        "pyproject.toml": [],
+        "scanner/__init__.py": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}

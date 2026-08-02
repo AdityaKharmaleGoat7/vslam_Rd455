@@ -1,0 +1,66 @@
+{
+  "nodes": [
+    {
+      "id": "file:.ua/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".ua/.understandignore",
+      "summary": "Ignore-pattern list used by the Understand-Anything analysis tool to exclude paths from codebase scanning; a tool artifact, not part of the D455 scanner's own source or architecture.",
+      "tags": ["configuration", "tooling", "ignore-list"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.ua/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".ua/config.json",
+      "summary": "Single-key configuration file for the Understand-Anything analysis tool specifying the output language for generated content; a tool artifact unrelated to the scanner's own configuration.",
+      "tags": ["configuration", "tooling"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Top-level project documentation for the D455 realtime RGB-D scanner: explains the two-phase capture/offline pipeline, requirements, run instructions, key bindings, output files, crash recovery, project layout, tuning parameters, and scanning tips.",
+      "tags": ["documentation", "entry-point", "overview", "usage-guide"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:pyproject.toml",
+      "type": "config",
+      "name": "pyproject.toml",
+      "filePath": "pyproject.toml",
+      "summary": "Python packaging configuration (setuptools build backend) declaring the d455-scanner project's metadata, dependencies (numpy, opencv-python, open3d, pyrealsense2), and the `d455-scan` console-script entry point mapped to scanner.cli:main.",
+      "tags": ["configuration", "build-system", "packaging", "python"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scanner/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "scanner/__init__.py",
+      "summary": "Package root for the scanner module; its docstring documents the two-phase reconstruction pipeline (realtime capture then offline pose-graph refinement) and maps out the responsibilities of every submodule (cli, config, camera, imu, capture, tracking, posegraph, mapping, pipeline, frameio, transforms). Declares __version__.",
+      "tags": ["entry-point", "documentation", "package-init", "python"],
+      "complexity": "simple",
+      "languageNotes": "Uses Sphinx-style reStructuredText cross-references (:mod:`scanner.x`) inside the module docstring to document the package's module map."
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:pyproject.toml",
+      "target": "file:scanner/__init__.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:scanner/__init__.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "nodes": [
+    {
+      "id": "file:scanner/config.py",
+      "type": "file",
+      "name": "config.py",
+      "filePath": "scanner/config.py",
+      "summary": "Module-level tuning constants for tracking health, relocalization, loop closure, and IMU gyro integration, each documented with guidance on which to adjust first when adapting the scanner to a new environment.",
+      "tags": ["config", "constants", "tuning", "utility"],
+      "complexity": "simple",
+      "languageNotes": "Deliberately kept as module-level constants instead of CLI flags or a dataclass, with inline docstrings explaining the physical/algorithmic meaning of each threshold."
+    },
+    {
+      "id": "file:scanner/imu.py",
+      "type": "file",
+      "name": "imu.py",
+      "filePath": "scanner/imu.py",
+      "summary": "Implements gyro-aided tracking support: accumulates high-rate IMU angular-velocity samples arriving between video frames into a rotation prior for RGBD odometry, and starts a dedicated librealsense pipeline for the motion module.",
+      "tags": ["imu", "sensor-fusion", "threading", "rotation-prior"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:scanner/imu.py:GyroIntegrator",
+      "type": "class",
+      "name": "GyroIntegrator",
+      "filePath": "scanner/imu.py",
+      "lineRange": [21, 66],
+      "summary": "Thread-safe accumulator that composes gyro angular-velocity samples into a rotation between video frames; pop_prior() conjugates the accumulated rotation into the color-camera frame and discards implausibly large rotations before handing it to the tracking pipeline.",
+      "tags": ["imu", "state", "thread-safe", "sensor-fusion"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/imu.py:start_imu",
+      "type": "function",
+      "name": "start_imu",
+      "filePath": "scanner/imu.py",
+      "lineRange": [69, 94],
+      "summary": "Starts a second librealsense pipeline dedicated to the gyro/motion stream, wires its callback to a new GyroIntegrator, and computes the gyro-to-color extrinsic rotation; falls back to (None, None) gracefully if the motion module is unavailable.",
+      "tags": ["imu", "initialization", "realsense", "error-handling"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scanner/posegraph.py",
+      "type": "file",
+      "name": "posegraph.py",
+      "filePath": "scanner/posegraph.py",
+      "summary": "Builds and optimizes an offline keyframe pose graph from tracked frames — odometry edges between consecutive keyframes plus loop-closure edges between spatially close, temporally distant keyframe pairs — then propagates the Levenberg-Marquardt-corrected keyframe poses onto every in-between frame via interpolation.",
+      "tags": ["pose-graph", "slam", "optimization", "loop-closure"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scanner/posegraph.py:select_keyframes",
+      "type": "function",
+      "name": "select_keyframes",
+      "filePath": "scanner/posegraph.py",
+      "lineRange": [23, 36],
+      "summary": "Selects keyframe indices from a pose trajectory, sampling at a fixed stride or sooner when translation/rotation since the last keyframe exceeds given thresholds, and always includes the first and last frame.",
+      "tags": ["keyframe-selection", "slam", "sampling"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/posegraph.py:optimize_trajectory",
+      "type": "function",
+      "name": "optimize_trajectory",
+      "filePath": "scanner/posegraph.py",
+      "lineRange": [39, 152],
+      "summary": "Constructs a pose graph over selected keyframes with RGBD-odometry-refined sequential edges and loop-closure edges, runs global Levenberg-Marquardt optimization, then interpolates the keyframe corrections onto all in-between frames to produce a drift-corrected trajectory.",
+      "tags": ["pose-graph", "optimization", "loop-closure", "rgbd-odometry"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scanner/transforms.py",
+      "type": "file",
+      "name": "transforms.py",
+      "filePath": "scanner/transforms.py",
+      "summary": "Small SO(3)/SE(3) math helpers (rotation-vector exponential map, geodesic rotation angle, rigid-transform interpolation) built on cv2.Rodrigues, avoiding a scipy dependency.",
+      "tags": ["math", "utility", "rotation", "geometry"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/transforms.py:so3_exp",
+      "type": "function",
+      "name": "so3_exp",
+      "filePath": "scanner/transforms.py",
+      "lineRange": [7, 9],
+      "summary": "Exponential map converting an axis-angle rotation vector into a 3x3 rotation matrix via cv2.Rodrigues.",
+      "tags": ["math", "utility", "rotation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/transforms.py:rotation_angle_deg",
+      "type": "function",
+      "name": "rotation_angle_deg",
+      "filePath": "scanner/transforms.py",
+      "lineRange": [12, 15],
+      "summary": "Computes the geodesic rotation angle in degrees of a 3x3 rotation matrix from its trace.",
+      "tags": ["math", "utility", "rotation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/transforms.py:interp_transform",
+      "type": "function",
+      "name": "interp_transform",
+      "filePath": "scanner/transforms.py",
+      "lineRange": [18, 30],
+      "summary": "Interpolates between two 4x4 rigid transforms at a fraction t, using geodesic (slerp-equivalent) interpolation for rotation and linear interpolation for translation; used to spread pose-graph corrections onto in-between frames.",
+      "tags": ["math", "interpolation", "rotation", "utility"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    { "source": "file:scanner/imu.py", "target": "file:scanner/config.py", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:scanner/imu.py", "target": "file:scanner/transforms.py", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:scanner/posegraph.py", "target": "file:scanner/config.py", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:scanner/posegraph.py", "target": "file:scanner/frameio.py", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:scanner/posegraph.py", "target": "file:scanner/tracking.py", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:scanner/posegraph.py", "target": "file:scanner/transforms.py", "type": "imports", "direction": "forward", "weight": 0.7 },
+
+    { "source": "file:scanner/imu.py", "target": "class:scanner/imu.py:GyroIntegrator", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:scanner/imu.py", "target": "function:scanner/imu.py:start_imu", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:scanner/posegraph.py", "target": "function:scanner/posegraph.py:select_keyframes", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:scanner/posegraph.py", "target": "function:scanner/posegraph.py:optimize_trajectory", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:scanner/transforms.py", "target": "function:scanner/transforms.py:so3_exp", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:scanner/transforms.py", "target": "function:scanner/transforms.py:rotation_angle_deg", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:scanner/transforms.py", "target": "function:scanner/transforms.py:interp_transform", "type": "contains", "direction": "forward", "weight": 1.0 },
+
+    { "source": "file:scanner/imu.py", "target": "class:scanner/imu.py:GyroIntegrator", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:scanner/imu.py", "target": "function:scanner/imu.py:start_imu", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:scanner/posegraph.py", "target": "function:scanner/posegraph.py:select_keyframes", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:scanner/posegraph.py", "target": "function:scanner/posegraph.py:optimize_trajectory", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:scanner/transforms.py", "target": "function:scanner/transforms.py:so3_exp", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:scanner/transforms.py", "target": "function:scanner/transforms.py:rotation_angle_deg", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:scanner/transforms.py", "target": "function:scanner/transforms.py:interp_transform", "type": "exports", "direction": "forward", "weight": 0.8 },
+
+    { "source": "class:scanner/imu.py:GyroIntegrator", "target": "function:scanner/transforms.py:so3_exp", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "class:scanner/imu.py:GyroIntegrator", "target": "function:scanner/transforms.py:rotation_angle_deg", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "function:scanner/posegraph.py:select_keyframes", "target": "function:scanner/transforms.py:rotation_angle_deg", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "function:scanner/posegraph.py:optimize_trajectory", "target": "function:scanner/tracking.py:rgbd_odometry", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "function:scanner/posegraph.py:optimize_trajectory", "target": "function:scanner/frameio.py:load_rgbd", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "function:scanner/posegraph.py:optimize_trajectory", "target": "function:scanner/transforms.py:interp_transform", "type": "calls", "direction": "forward", "weight": 0.8 }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "projectRoot": "/home/aditya/Documents/Demo/vslam_Rd455",
+  "batchFiles": [
+    {"path": "scanner/camera.py", "language": "python", "sizeLines": 117, "fileCategory": "code"},
+    {"path": "scanner/capture.py", "language": "python", "sizeLines": 360, "fileCategory": "code"},
+    {"path": "scanner/frameio.py", "language": "python", "sizeLines": 124, "fileCategory": "code"},
+    {"path": "scanner/mapping.py", "language": "python", "sizeLines": 88, "fileCategory": "code"},
+    {"path": "scanner/pipeline.py", "language": "python", "sizeLines": 71, "fileCategory": "code"},
+    {"path": "scanner/tracking.py", "language": "python", "sizeLines": 52, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "scanner/camera.py": [],
+    "scanner/capture.py": ["scanner/camera.py","scanner/config.py","scanner/frameio.py","scanner/imu.py","scanner/mapping.py","scanner/pipeline.py","scanner/tracking.py"],
+    "scanner/frameio.py": [],
+    "scanner/mapping.py": [],
+    "scanner/pipeline.py": ["scanner/frameio.py","scanner/mapping.py","scanner/posegraph.py"],
+    "scanner/tracking.py": []
+  }
+}

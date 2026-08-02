@@ -1,0 +1,29 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'file:.ua/.understandignore' has no edges (orphan)",
+    "Node 'config:.ua/config.json' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 58,
+    "totalEdges": 116,
+    "totalLayers": 7,
+    "tourSteps": 12,
+    "nodeTypes": {
+      "file": 15,
+      "function": 37,
+      "class": 3,
+      "config": 2,
+      "document": 1
+    },
+    "edgeTypes": {
+      "contains": 40,
+      "exports": 26,
+      "imports": 18,
+      "calls": 28,
+      "depends_on": 2,
+      "configures": 1,
+      "documents": 1
+    }
+  }
+}

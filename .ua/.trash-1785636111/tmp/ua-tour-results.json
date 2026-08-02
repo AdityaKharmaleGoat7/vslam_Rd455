@@ -1,0 +1,363 @@
+{
+  "scriptCompleted": true,
+  "entryPointCandidates": [
+    {
+      "id": "file:scanner/__main__.py",
+      "score": 5,
+      "name": "__main__.py",
+      "summary": "Package execution hook that lets the scanner be launched via `python -m scanner`, delegating to scanner.cli.main."
+    },
+    {
+      "id": "document:README.md",
+      "score": 5,
+      "name": "README.md",
+      "summary": "Top-level project documentation for the D455 realtime RGB-D scanner: explains the two-phase capture/offline pipeline, requirements, run instructions, key bindings, output files, crash recovery, project layout, tuning parameters, and scanning tips."
+    },
+    {
+      "id": "file:scanner/posegraph.py",
+      "score": 3,
+      "name": "posegraph.py",
+      "summary": "Builds and optimizes an offline keyframe pose graph from tracked frames — odometry edges between consecutive keyframes plus loop-closure edges between spatially close, temporally distant keyframe pairs — then propagates the corrected keyframe poses onto every in-between frame via interpolation."
+    },
+    {
+      "id": "file:scanner/camera.py",
+      "score": 2,
+      "name": "camera.py",
+      "summary": "Manages the RealSense D455 video pipeline: starts depth+color streaming, builds the depth post-processing filter chain and depth-to-color alignment block, and locks auto-exposure/white-balance so TSDF colors stay consistent across a scan."
+    },
+    {
+      "id": "file:scanner/capture.py",
+      "score": 2,
+      "name": "capture.py",
+      "summary": "Defines CaptureSession, the realtime capture loop that orchestrates camera+IMU acquisition, IMU-primed frame-to-model tracking with relocalization, TSDF integration, background frame recording, and crash-safe finalization into the offline refinement pipeline."
+    }
+  ],
+  "fanInRanking": [
+    {
+      "id": "file:scanner/pipeline.py",
+      "fanIn": 4,
+      "name": "pipeline.py"
+    },
+    {
+      "id": "file:scanner/frameio.py",
+      "fanIn": 3,
+      "name": "frameio.py"
+    },
+    {
+      "id": "file:scanner/config.py",
+      "fanIn": 3,
+      "name": "config.py"
+    },
+    {
+      "id": "file:scanner/capture.py",
+      "fanIn": 2,
+      "name": "capture.py"
+    },
+    {
+      "id": "file:scanner/mapping.py",
+      "fanIn": 2,
+      "name": "mapping.py"
+    },
+    {
+      "id": "file:scanner/tracking.py",
+      "fanIn": 2,
+      "name": "tracking.py"
+    },
+    {
+      "id": "file:scanner/transforms.py",
+      "fanIn": 2,
+      "name": "transforms.py"
+    },
+    {
+      "id": "file:scanner/cli.py",
+      "fanIn": 2,
+      "name": "cli.py"
+    },
+    {
+      "id": "file:scanner/__init__.py",
+      "fanIn": 2,
+      "name": "__init__.py"
+    },
+    {
+      "id": "file:scanner/camera.py",
+      "fanIn": 1,
+      "name": "camera.py"
+    },
+    {
+      "id": "file:scanner/imu.py",
+      "fanIn": 1,
+      "name": "imu.py"
+    },
+    {
+      "id": "file:scanner/posegraph.py",
+      "fanIn": 1,
+      "name": "posegraph.py"
+    },
+    {
+      "id": "file:realtime_pointcloud.py",
+      "fanIn": 0,
+      "name": "realtime_pointcloud.py"
+    },
+    {
+      "id": "file:scanner/__main__.py",
+      "fanIn": 0,
+      "name": "__main__.py"
+    },
+    {
+      "id": "document:README.md",
+      "fanIn": 0,
+      "name": "README.md"
+    },
+    {
+      "id": "config:pyproject.toml",
+      "fanIn": 0,
+      "name": "pyproject.toml"
+    }
+  ],
+  "fanOutRanking": [
+    {
+      "id": "file:scanner/capture.py",
+      "fanOut": 8,
+      "name": "capture.py"
+    },
+    {
+      "id": "file:scanner/posegraph.py",
+      "fanOut": 4,
+      "name": "posegraph.py"
+    },
+    {
+      "id": "file:scanner/cli.py",
+      "fanOut": 4,
+      "name": "cli.py"
+    },
+    {
+      "id": "file:scanner/pipeline.py",
+      "fanOut": 3,
+      "name": "pipeline.py"
+    },
+    {
+      "id": "file:scanner/imu.py",
+      "fanOut": 2,
+      "name": "imu.py"
+    },
+    {
+      "id": "file:realtime_pointcloud.py",
+      "fanOut": 1,
+      "name": "realtime_pointcloud.py"
+    },
+    {
+      "id": "file:scanner/__main__.py",
+      "fanOut": 1,
+      "name": "__main__.py"
+    },
+    {
+      "id": "document:README.md",
+      "fanOut": 1,
+      "name": "README.md"
+    },
+    {
+      "id": "config:pyproject.toml",
+      "fanOut": 1,
+      "name": "pyproject.toml"
+    },
+    {
+      "id": "file:scanner/camera.py",
+      "fanOut": 0,
+      "name": "camera.py"
+    },
+    {
+      "id": "file:scanner/frameio.py",
+      "fanOut": 0,
+      "name": "frameio.py"
+    },
+    {
+      "id": "file:scanner/mapping.py",
+      "fanOut": 0,
+      "name": "mapping.py"
+    },
+    {
+      "id": "file:scanner/tracking.py",
+      "fanOut": 0,
+      "name": "tracking.py"
+    },
+    {
+      "id": "file:scanner/config.py",
+      "fanOut": 0,
+      "name": "config.py"
+    },
+    {
+      "id": "file:scanner/transforms.py",
+      "fanOut": 0,
+      "name": "transforms.py"
+    },
+    {
+      "id": "file:scanner/__init__.py",
+      "fanOut": 0,
+      "name": "__init__.py"
+    }
+  ],
+  "bfsTraversal": {
+    "startNode": "file:scanner/__main__.py",
+    "order": [
+      "file:scanner/__main__.py",
+      "file:scanner/cli.py",
+      "file:scanner/pipeline.py",
+      "file:scanner/capture.py",
+      "file:scanner/frameio.py",
+      "file:scanner/mapping.py",
+      "file:scanner/posegraph.py",
+      "file:scanner/camera.py",
+      "file:scanner/config.py",
+      "file:scanner/imu.py",
+      "file:scanner/tracking.py",
+      "file:scanner/transforms.py"
+    ],
+    "depthMap": {
+      "file:scanner/__main__.py": 0,
+      "file:scanner/cli.py": 1,
+      "file:scanner/pipeline.py": 2,
+      "file:scanner/capture.py": 2,
+      "file:scanner/frameio.py": 3,
+      "file:scanner/mapping.py": 3,
+      "file:scanner/posegraph.py": 3,
+      "file:scanner/camera.py": 3,
+      "file:scanner/config.py": 3,
+      "file:scanner/imu.py": 3,
+      "file:scanner/tracking.py": 3,
+      "file:scanner/transforms.py": 4
+    },
+    "byDepth": {
+      "0": [
+        "file:scanner/__main__.py"
+      ],
+      "1": [
+        "file:scanner/cli.py"
+      ],
+      "2": [
+        "file:scanner/pipeline.py",
+        "file:scanner/capture.py"
+      ],
+      "3": [
+        "file:scanner/frameio.py",
+        "file:scanner/mapping.py",
+        "file:scanner/posegraph.py",
+        "file:scanner/camera.py",
+        "file:scanner/config.py",
+        "file:scanner/imu.py",
+        "file:scanner/tracking.py"
+      ],
+      "4": [
+        "file:scanner/transforms.py"
+      ]
+    }
+  },
+  "nonCodeFiles": {
+    "documentation": [
+      {
+        "id": "document:README.md",
+        "name": "README.md",
+        "type": "document",
+        "summary": "Top-level project documentation for the D455 realtime RGB-D scanner: explains the two-phase capture/offline pipeline, requirements, run instructions, key bindings, output files, crash recovery, project layout, tuning parameters, and scanning tips."
+      }
+    ],
+    "infrastructure": [],
+    "data": [],
+    "config": [
+      {
+        "id": "config:pyproject.toml",
+        "name": "pyproject.toml",
+        "type": "config",
+        "summary": "Python packaging configuration (setuptools build backend) declaring the d455-scanner project's metadata, dependencies, and the `d455-scan` console-script entry point mapped to scanner.cli:main."
+      }
+    ]
+  },
+  "clusters": [],
+  "layers": {
+    "count": 0,
+    "list": []
+  },
+  "nodeSummaryIndex": {
+    "file:scanner/camera.py": {
+      "name": "camera.py",
+      "type": "file",
+      "summary": "Manages the RealSense D455 video pipeline: starts depth+color streaming, builds the depth post-processing filter chain and depth-to-color alignment block, and locks auto-exposure/white-balance so TSDF colors stay consistent across a scan."
+    },
+    "file:scanner/capture.py": {
+      "name": "capture.py",
+      "type": "file",
+      "summary": "Defines CaptureSession, the realtime capture loop that orchestrates camera+IMU acquisition, IMU-primed frame-to-model tracking with relocalization, TSDF integration, background frame recording, and crash-safe finalization into the offline refinement pipeline."
+    },
+    "file:scanner/frameio.py": {
+      "name": "frameio.py",
+      "type": "file",
+      "summary": "Handles frame and metadata I/O: a background-threaded FrameWriter that saves depth/color PNGs and JPEGs without blocking the tracking loop, plus loaders for recorded RGB-D frames and the JSON scan metadata used by the offline refinement pipeline."
+    },
+    "file:scanner/mapping.py": {
+      "name": "mapping.py",
+      "type": "file",
+      "summary": "TSDF voxel block grid operations: extracting and exporting point clouds/meshes in 8-bit-RGB legacy format for external viewer compatibility, and the offline re-integration pass that re-fuses recorded frames at a finer voxel resolution."
+    },
+    "file:scanner/pipeline.py": {
+      "name": "pipeline.py",
+      "type": "file",
+      "summary": "Offline reconstruction pipeline shared by live capture and --refine-only: optimizes the tracked trajectory via pose-graph optimization, re-integrates recorded frames, saves the point cloud, and can rebuild a full scan from a previous session's frames directory without touching the camera."
+    },
+    "file:scanner/tracking.py": {
+      "name": "tracking.py",
+      "type": "file",
+      "summary": "Shared RGB-D odometry helper wrapping Open3D's multi-scale hybrid odometry with tuned convergence criteria, used by realtime tracking, relocalization, and the pose graph for any tracking path that needs an initial transformation."
+    },
+    "file:scanner/config.py": {
+      "name": "config.py",
+      "type": "file",
+      "summary": "Module-level tuning constants for tracking health, relocalization, loop closure, and IMU gyro integration, each documented with guidance on which to adjust first when adapting the scanner to a new environment."
+    },
+    "file:scanner/imu.py": {
+      "name": "imu.py",
+      "type": "file",
+      "summary": "Implements gyro-aided tracking support: accumulates high-rate IMU angular-velocity samples arriving between video frames into a rotation prior for RGBD odometry, and starts a dedicated librealsense pipeline for the motion module."
+    },
+    "file:scanner/posegraph.py": {
+      "name": "posegraph.py",
+      "type": "file",
+      "summary": "Builds and optimizes an offline keyframe pose graph from tracked frames — odometry edges between consecutive keyframes plus loop-closure edges between spatially close, temporally distant keyframe pairs — then propagates the corrected keyframe poses onto every in-between frame via interpolation."
+    },
+    "file:scanner/transforms.py": {
+      "name": "transforms.py",
+      "type": "file",
+      "summary": "Small SO(3)/SE(3) math helpers (rotation-vector exponential map, geodesic rotation angle, rigid-transform interpolation) built on cv2.Rodrigues, avoiding a scipy dependency."
+    },
+    "file:realtime_pointcloud.py": {
+      "name": "realtime_pointcloud.py",
+      "type": "file",
+      "summary": "Thin backwards-compatibility entry point at the project root that delegates straight to scanner.cli.main, kept so the scanner can still be launched as a standalone script."
+    },
+    "file:scanner/__main__.py": {
+      "name": "__main__.py",
+      "type": "file",
+      "summary": "Package execution hook that lets the scanner be launched via `python -m scanner`, delegating to scanner.cli.main."
+    },
+    "file:scanner/cli.py": {
+      "name": "cli.py",
+      "type": "file",
+      "summary": "Command-line interface for the D455 scanner: defines all CLI arguments (voxel sizes, depth range, keyframe thresholds, IMU/mesh/view toggles) and the main() function that dispatches to either offline refinement or a full realtime capture session."
+    },
+    "document:README.md": {
+      "name": "README.md",
+      "type": "document",
+      "summary": "Top-level project documentation for the D455 realtime RGB-D scanner: explains the two-phase capture/offline pipeline, requirements, run instructions, key bindings, output files, crash recovery, project layout, tuning parameters, and scanning tips."
+    },
+    "config:pyproject.toml": {
+      "name": "pyproject.toml",
+      "type": "config",
+      "summary": "Python packaging configuration (setuptools build backend) declaring the d455-scanner project's metadata, dependencies, and the `d455-scan` console-script entry point mapped to scanner.cli:main."
+    },
+    "file:scanner/__init__.py": {
+      "name": "__init__.py",
+      "type": "file",
+      "summary": "Package root for the scanner module; its docstring documents the two-phase reconstruction pipeline and maps out the responsibilities of every submodule."
+    }
+  },
+  "totalNodes": 16,
+  "totalEdges": 25
+}

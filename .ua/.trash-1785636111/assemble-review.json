@@ -1,0 +1,17 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 0,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "Merge script report showed no 'Could not fix' items; input (58 nodes, 116 edges) exactly matched output (58 nodes, 116 edges), confirming no drops occurred.",
+    "Verified all 58 node IDs are unique, well-formed (type-prefix:filePath[:name]), and every node has id/type/summary populated.",
+    "No dangling edges: every edge source/target resolves to an existing node ID.",
+    "No duplicate (source,target,type) edge keys.",
+    "Cross-checked all 18 import-map entries with non-empty import lists against assembled graph 'imports' edges: capture.py(7)+pipeline.py(3)+imu.py(2)+posegraph.py(4)+realtime_pointcloud.py(1)+__main__.py(1)=18, matching the 18 'imports' edges present exactly. No cross-batch import edges were missing.",
+    "Node type/complexity distributions look consistent with valid enums (file/function/class/config/document; simple/moderate/complex) -- no unknown types or complexity values found.",
+    "No action needed; assembled-graph.json left unmodified."
+  ]
+}

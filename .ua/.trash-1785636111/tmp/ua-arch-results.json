@@ -1,0 +1,176 @@
+{
+  "scriptCompleted": true,
+  "directoryGroups": {
+    "scanner": [
+      "file:scanner/camera.py",
+      "file:scanner/capture.py",
+      "file:scanner/frameio.py",
+      "file:scanner/mapping.py",
+      "file:scanner/pipeline.py",
+      "file:scanner/tracking.py",
+      "file:scanner/config.py",
+      "file:scanner/imu.py",
+      "file:scanner/posegraph.py",
+      "file:scanner/transforms.py",
+      "file:scanner/__main__.py",
+      "file:scanner/cli.py",
+      "file:scanner/__init__.py"
+    ],
+    "(root)": [
+      "file:realtime_pointcloud.py",
+      "document:README.md",
+      "config:pyproject.toml"
+    ],
+    ".ua": [
+      "file:.ua/.understandignore",
+      "config:.ua/config.json"
+    ]
+  },
+  "nodeTypeGroups": {
+    "file": [
+      "file:scanner/camera.py",
+      "file:scanner/capture.py",
+      "file:scanner/frameio.py",
+      "file:scanner/mapping.py",
+      "file:scanner/pipeline.py",
+      "file:scanner/tracking.py",
+      "file:scanner/config.py",
+      "file:scanner/imu.py",
+      "file:scanner/posegraph.py",
+      "file:scanner/transforms.py",
+      "file:realtime_pointcloud.py",
+      "file:scanner/__main__.py",
+      "file:scanner/cli.py",
+      "file:.ua/.understandignore",
+      "file:scanner/__init__.py"
+    ],
+    "config": [
+      "config:.ua/config.json",
+      "config:pyproject.toml"
+    ],
+    "document": [
+      "document:README.md"
+    ]
+  },
+  "crossCategoryEdges": [
+    {
+      "fromType": "config",
+      "toType": "file",
+      "edgeType": "configures",
+      "count": 1
+    },
+    {
+      "fromType": "document",
+      "toType": "file",
+      "edgeType": "documents",
+      "count": 1
+    }
+  ],
+  "interGroupImports": [
+    {
+      "from": "(root)",
+      "to": "scanner",
+      "count": 1
+    }
+  ],
+  "intraGroupDensity": {
+    "scanner": {
+      "internalEdges": 17,
+      "totalEdges": 18,
+      "density": 0.944
+    },
+    "(root)": {
+      "internalEdges": 0,
+      "totalEdges": 1,
+      "density": 0
+    },
+    ".ua": {
+      "internalEdges": 0,
+      "totalEdges": 0,
+      "density": 0
+    }
+  },
+  "patternMatches": {},
+  "deploymentTopology": {
+    "hasDockerfile": false,
+    "hasCompose": false,
+    "hasK8s": false,
+    "hasTerraform": false,
+    "hasCI": false,
+    "infraFiles": []
+  },
+  "dataPipeline": {
+    "schemaFiles": [],
+    "migrationFiles": [],
+    "dataModelFiles": [],
+    "apiHandlerFiles": []
+  },
+  "docCoverage": {
+    "groupsWithDocs": 1,
+    "totalGroups": 3,
+    "coverageRatio": 0.333,
+    "undocumentedGroups": [
+      "scanner",
+      ".ua"
+    ]
+  },
+  "dependencyDirection": [
+    {
+      "dependent": "(root)",
+      "dependsOn": "scanner"
+    }
+  ],
+  "fileStats": {
+    "totalFileNodes": 18,
+    "filesPerGroup": {
+      "scanner": 13,
+      "(root)": 3,
+      ".ua": 2
+    },
+    "nodeTypeCounts": {
+      "file": 15,
+      "config": 2,
+      "document": 1
+    }
+  },
+  "fileFanIn": {
+    "file:scanner/camera.py": 1,
+    "file:scanner/capture.py": 0,
+    "file:scanner/frameio.py": 3,
+    "file:scanner/mapping.py": 2,
+    "file:scanner/pipeline.py": 1,
+    "file:scanner/tracking.py": 2,
+    "file:scanner/config.py": 3,
+    "file:scanner/imu.py": 1,
+    "file:scanner/posegraph.py": 1,
+    "file:scanner/transforms.py": 2,
+    "file:realtime_pointcloud.py": 0,
+    "file:scanner/__main__.py": 0,
+    "file:scanner/cli.py": 2,
+    "file:.ua/.understandignore": 0,
+    "config:.ua/config.json": 0,
+    "document:README.md": 0,
+    "config:pyproject.toml": 0,
+    "file:scanner/__init__.py": 0
+  },
+  "fileFanOut": {
+    "file:scanner/camera.py": 0,
+    "file:scanner/capture.py": 7,
+    "file:scanner/frameio.py": 0,
+    "file:scanner/mapping.py": 0,
+    "file:scanner/pipeline.py": 3,
+    "file:scanner/tracking.py": 0,
+    "file:scanner/config.py": 0,
+    "file:scanner/imu.py": 2,
+    "file:scanner/posegraph.py": 4,
+    "file:scanner/transforms.py": 0,
+    "file:realtime_pointcloud.py": 1,
+    "file:scanner/__main__.py": 1,
+    "file:scanner/cli.py": 0,
+    "file:.ua/.understandignore": 0,
+    "config:.ua/config.json": 0,
+    "document:README.md": 0,
+    "config:pyproject.toml": 0,
+    "file:scanner/__init__.py": 0
+  }
+}

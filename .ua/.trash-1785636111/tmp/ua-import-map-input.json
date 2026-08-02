@@ -1,0 +1,95 @@
+{
+  "projectRoot": "/home/aditya/Documents/Demo/vslam_Rd455",
+  "files": [
+    {
+      "path": ".ua/.understandignore",
+      "language": "unknown",
+      "fileCategory": "code"
+    },
+    {
+      "path": ".ua/config.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "pyproject.toml",
+      "language": "toml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "realtime_pointcloud.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/__init__.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/__main__.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/camera.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/capture.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/cli.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/config.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/frameio.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/imu.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/mapping.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/pipeline.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/posegraph.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/tracking.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "scanner/transforms.py",
+      "language": "python",
+      "fileCategory": "code"
+    }
+  ]
+}

@@ -1,0 +1,1944 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "d455-scanner",
+    "languages": [
+      "python",
+      "json",
+      "markdown",
+      "toml"
+    ],
+    "frameworks": [],
+    "description": "Handheld realtime RGB-D 3D scanner for the Intel RealSense D455 (dense SLAM + TSDF fusion with pose-graph-optimized offline refinement)",
+    "analyzedAt": "2026-08-02T02:01:01Z",
+    "gitCommitHash": "4191a8c213cb65766f0eafade9a75913753ea2df"
+  },
+  "nodes": [
+    {
+      "id": "file:scanner/camera.py",
+      "type": "file",
+      "name": "camera.py",
+      "filePath": "scanner/camera.py",
+      "summary": "Manages the RealSense D455 video pipeline: starts depth+color streaming, builds the depth post-processing filter chain and depth-to-color alignment block, and locks auto-exposure/white-balance so TSDF colors stay consistent across a scan.",
+      "tags": [
+        "camera-io",
+        "sensor-pipeline",
+        "depth-processing",
+        "calibration",
+        "hardware"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Filter ordering is deliberate: spatial/temporal filters run on the native-resolution depth frame before rs.align, since aligning first resamples depth to the color viewpoint and breaks the filters' assumptions."
+    },
+    {
+      "id": "function:scanner/camera.py:start_camera",
+      "type": "function",
+      "name": "start_camera",
+      "filePath": "scanner/camera.py",
+      "lineRange": [
+        15,
+        62
+      ],
+      "summary": "Starts RealSense depth+color streaming, applies the high-accuracy visual preset when supported, builds the depth filter chain and align block, and computes the color-stream intrinsics as an Open3D tensor.",
+      "tags": [
+        "initialization",
+        "camera-io",
+        "hardware",
+        "realsense"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/camera.py:filter_and_align",
+      "type": "function",
+      "name": "filter_and_align",
+      "filePath": "scanner/camera.py",
+      "lineRange": [
+        65,
+        93
+      ],
+      "summary": "Applies the spatial/temporal depth filters to the original depth frame before aligning to color, falling back once to filter-after-align on librealsense builds that reject frameset input to processing blocks.",
+      "tags": [
+        "depth-processing",
+        "filtering",
+        "error-handling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/camera.py:lock_exposure",
+      "type": "function",
+      "name": "lock_exposure",
+      "filePath": "scanner/camera.py",
+      "lineRange": [
+        96,
+        117
+      ],
+      "summary": "Freezes the RGB sensor's auto-exposure and auto white-balance at their current settled values so recorded colors stay consistent across a scan.",
+      "tags": [
+        "camera-io",
+        "calibration",
+        "hardware"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scanner/capture.py",
+      "type": "file",
+      "name": "capture.py",
+      "filePath": "scanner/capture.py",
+      "summary": "Defines CaptureSession, the realtime capture loop that orchestrates camera+IMU acquisition, IMU-primed frame-to-model tracking with relocalization, TSDF integration, background frame recording, and crash-safe finalization into the offline refinement pipeline.",
+      "tags": [
+        "slam",
+        "state-machine",
+        "orchestrator",
+        "realtime",
+        "tracking"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Central per-frame state machine coordinating six sibling modules; every exit path (quit, Ctrl+C, or exception) flushes the writer and saves tracked poses so --refine-only can always rebuild the scan offline."
+    },
+    {
+      "id": "class:scanner/capture.py:CaptureSession",
+      "type": "class",
+      "name": "CaptureSession",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        42,
+        360
+      ],
+      "summary": "Owns the camera, IMU, SLAM model, and all per-scan state; implements the full per-frame pipeline (grab, filter+align, track, relocalize, integrate, record, HUD) plus crash-safe shutdown and finalization into offline refinement.",
+      "tags": [
+        "slam",
+        "state-machine",
+        "orchestrator",
+        "realtime"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scanner/capture.py:__init__",
+      "type": "function",
+      "name": "__init__",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        45,
+        81
+      ],
+      "summary": "Initializes a capture session: starts the camera and optional IMU, allocates the SLAM model and raycast frames, and sets up the frames directory and background FrameWriter for recording.",
+      "tags": [
+        "initialization",
+        "setup",
+        "slam"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/capture.py:warm_up",
+      "type": "function",
+      "name": "warm_up",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        85,
+        93
+      ],
+      "summary": "Lets auto-exposure settle over a few frames, then locks it and writes the scan metadata JSON.",
+      "tags": [
+        "calibration",
+        "setup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/capture.py:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        95,
+        107
+      ],
+      "summary": "The main capture loop: repeatedly steps the session until it ends, handling keyboard interrupt and unhandled exceptions, and always calling shutdown.",
+      "tags": [
+        "main-loop",
+        "error-handling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/capture.py:_shutdown",
+      "type": "function",
+      "name": "_shutdown",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        109,
+        118
+      ],
+      "summary": "Crash-safe teardown: stops the camera/IMU streams, closes windows, flushes the background writer, and saves tracked poses to disk.",
+      "tags": [
+        "cleanup",
+        "crash-safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/capture.py:_step",
+      "type": "function",
+      "name": "_step",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        122,
+        156
+      ],
+      "summary": "Processes one camera frame: grabs and filters/aligns it, tracks or relocalizes the pose, integrates into the TSDF on success, updates the FPS estimate, and renders the HUD.",
+      "tags": [
+        "frame-processing",
+        "tracking",
+        "control-flow"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/capture.py:_prepare",
+      "type": "function",
+      "name": "_prepare",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        158,
+        176
+      ],
+      "summary": "Converts raw librealsense depth/color frames to numpy arrays and device images, clipping depth outside the configured min/max range.",
+      "tags": [
+        "preprocessing",
+        "depth-processing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/capture.py:_track",
+      "type": "function",
+      "name": "_track",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        178,
+        208
+      ],
+      "summary": "Tracks the current frame against the raycast model frame, via IMU-primed RGB-D odometry when available or Open3D's frame-to-model tracker otherwise, and applies fitness/RMSE/step-size health checks before accepting the pose.",
+      "tags": [
+        "tracking",
+        "odometry",
+        "health-check"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/capture.py:_relocalize",
+      "type": "function",
+      "name": "_relocalize",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        210,
+        227
+      ],
+      "summary": "Attempts to re-acquire tracking by matching the current frame against the stored keyframe ring buffer, newest first, accepting the first match that clears the relocalization fitness/RMSE thresholds.",
+      "tags": [
+        "relocalization",
+        "recovery",
+        "tracking"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/capture.py:_integrate",
+      "type": "function",
+      "name": "_integrate",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        229,
+        252
+      ],
+      "summary": "Fuses the tracked frame into the TSDF model, refreshes the raycast frame, records the pose and periodic keyframes for relocalization, and queues the frame for background disk recording.",
+      "tags": [
+        "tsdf",
+        "integration",
+        "keyframes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/capture.py:_hud",
+      "type": "function",
+      "name": "_hud",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        256,
+        290
+      ],
+      "summary": "Renders the live preview window with tracking status and position overlay, and handles quit/snapshot/reset key presses.",
+      "tags": [
+        "ui",
+        "visualization",
+        "input-handling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/capture.py:_reset",
+      "type": "function",
+      "name": "_reset",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        292,
+        311
+      ],
+      "summary": "Restarts the reconstruction from scratch: fresh SLAM model, cleared trajectory/keyframes/IMU accumulator, and a cleared frames directory with fresh metadata.",
+      "tags": [
+        "reset",
+        "state-management"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/capture.py:finalize",
+      "type": "function",
+      "name": "finalize",
+      "filePath": "scanner/capture.py",
+      "lineRange": [
+        315,
+        360
+      ],
+      "summary": "Post-capture finalization: saves the trajectory and metadata, then either exports the realtime TSDF directly or runs the full offline refinement pipeline, printing crash-recovery instructions on failure.",
+      "tags": [
+        "finalization",
+        "offline-processing",
+        "error-handling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scanner/frameio.py",
+      "type": "file",
+      "name": "frameio.py",
+      "filePath": "scanner/frameio.py",
+      "summary": "Handles frame and metadata I/O: a background-threaded FrameWriter that saves depth/color PNGs and JPEGs without blocking the tracking loop, plus loaders for recorded RGB-D frames and the JSON scan metadata used by the offline refinement pipeline.",
+      "tags": [
+        "file-io",
+        "threading",
+        "serialization",
+        "persistence"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:scanner/frameio.py:FrameWriter",
+      "type": "class",
+      "name": "FrameWriter",
+      "filePath": "scanner/frameio.py",
+      "lineRange": [
+        24,
+        83
+      ],
+      "summary": "Background-threaded frame writer that queues depth/color images for disk writes so PNG/JPEG encoding never blocks the realtime tracking loop; blocks with rate-limited warnings rather than dropping frames when the disk falls behind.",
+      "tags": [
+        "threading",
+        "file-io",
+        "producer-consumer"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/frameio.py:_run",
+      "type": "function",
+      "name": "_run",
+      "filePath": "scanner/frameio.py",
+      "lineRange": [
+        50,
+        61
+      ],
+      "summary": "Background thread loop that pulls queued items and writes each frame to disk with cv2.imwrite, exiting on a None sentinel.",
+      "tags": [
+        "threading",
+        "file-io"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/frameio.py:drain",
+      "type": "function",
+      "name": "drain",
+      "filePath": "scanner/frameio.py",
+      "lineRange": [
+        63,
+        73
+      ],
+      "summary": "Discards all currently queued frames and waits for any in-flight write to finish, used before clearing the frames directory on reconstruction reset.",
+      "tags": [
+        "cleanup",
+        "threading"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/frameio.py:load_rgbd",
+      "type": "function",
+      "name": "load_rgbd",
+      "filePath": "scanner/frameio.py",
+      "lineRange": [
+        86,
+        97
+      ],
+      "summary": "Loads a recorded depth/color frame pair from disk by index and returns them as an Open3D RGBDImage on the target device, or None if either file is missing.",
+      "tags": [
+        "file-io",
+        "deserialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/frameio.py:build_meta",
+      "type": "function",
+      "name": "build_meta",
+      "filePath": "scanner/frameio.py",
+      "lineRange": [
+        100,
+        112
+      ],
+      "summary": "Collects camera intrinsics, depth scale, and capture parameters into a plain dict so recorded frames can be reprocessed later without the camera.",
+      "tags": [
+        "serialization",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/frameio.py:save_meta",
+      "type": "function",
+      "name": "save_meta",
+      "filePath": "scanner/frameio.py",
+      "lineRange": [
+        115,
+        118
+      ],
+      "summary": "Writes the scan metadata dict built by build_meta as JSON to the given path.",
+      "tags": [
+        "serialization",
+        "file-io"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/frameio.py:load_meta",
+      "type": "function",
+      "name": "load_meta",
+      "filePath": "scanner/frameio.py",
+      "lineRange": [
+        121,
+        124
+      ],
+      "summary": "Reads a scan metadata JSON file previously written by save_meta.",
+      "tags": [
+        "deserialization",
+        "file-io"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scanner/mapping.py",
+      "type": "file",
+      "name": "mapping.py",
+      "filePath": "scanner/mapping.py",
+      "summary": "TSDF voxel block grid operations: extracting and exporting point clouds/meshes in 8-bit-RGB legacy format for external viewer compatibility, and the offline re-integration pass that re-fuses recorded frames at a finer voxel resolution.",
+      "tags": [
+        "tsdf",
+        "point-cloud",
+        "reconstruction",
+        "mesh-export"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Export deliberately goes through Open3D's legacy writer (uchar RGB) instead of the tensor writer (float RGB), since most external viewers render float colors as no color at all."
+    },
+    {
+      "id": "function:scanner/mapping.py:extract_cloud",
+      "type": "function",
+      "name": "extract_cloud",
+      "filePath": "scanner/mapping.py",
+      "lineRange": [
+        19,
+        22
+      ],
+      "summary": "Extracts a point cloud from a TSDF voxel block grid and moves it to the CPU device.",
+      "tags": [
+        "tsdf",
+        "point-cloud",
+        "extraction"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/mapping.py:save_cloud",
+      "type": "function",
+      "name": "save_cloud",
+      "filePath": "scanner/mapping.py",
+      "lineRange": [
+        25,
+        51
+      ],
+      "summary": "Extracts, optionally denoises, and saves a TSDF point cloud (and optional mesh) to disk in 8-bit RGB legacy PLY format.",
+      "tags": [
+        "point-cloud",
+        "export",
+        "denoising"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/mapping.py:refine",
+      "type": "function",
+      "name": "refine",
+      "filePath": "scanner/mapping.py",
+      "lineRange": [
+        54,
+        88
+      ],
+      "summary": "Re-fuses all recorded frames into a fresh, finer-resolution voxel block grid by streaming depth/color images from disk one at a time, skipping any frames that were never flushed to disk.",
+      "tags": [
+        "tsdf",
+        "offline-processing",
+        "reconstruction"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scanner/pipeline.py",
+      "type": "file",
+      "name": "pipeline.py",
+      "filePath": "scanner/pipeline.py",
+      "summary": "Offline reconstruction pipeline shared by live capture and --refine-only: optimizes the tracked trajectory via pose-graph optimization, re-integrates recorded frames, saves the point cloud, and can rebuild a full scan from a previous session's frames directory without touching the camera.",
+      "tags": [
+        "offline-processing",
+        "pose-graph",
+        "recovery",
+        "entry-point"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/pipeline.py:offline_pipeline",
+      "type": "function",
+      "name": "offline_pipeline",
+      "filePath": "scanner/pipeline.py",
+      "lineRange": [
+        22,
+        38
+      ],
+      "summary": "Runs the offline half of reconstruction: optimizes the tracked trajectory via pose-graph optimization (unless disabled), re-integrates all frames at the fine voxel size, and saves the final point cloud.",
+      "tags": [
+        "offline-processing",
+        "pose-graph",
+        "reconstruction"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/pipeline.py:view_result",
+      "type": "function",
+      "name": "view_result",
+      "filePath": "scanner/pipeline.py",
+      "lineRange": [
+        41,
+        45
+      ],
+      "summary": "Opens a saved point cloud file in the Open3D visualization window.",
+      "tags": [
+        "visualization",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/pipeline.py:refine_only",
+      "type": "function",
+      "name": "refine_only",
+      "filePath": "scanner/pipeline.py",
+      "lineRange": [
+        48,
+        71
+      ],
+      "summary": "Entry point for the --refine-only recovery flow: loads a previous session's metadata and poses from its frames directory and reruns the offline pipeline without touching the camera.",
+      "tags": [
+        "recovery",
+        "entry-point",
+        "offline-processing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scanner/tracking.py",
+      "type": "file",
+      "name": "tracking.py",
+      "filePath": "scanner/tracking.py",
+      "summary": "Shared RGB-D odometry helper wrapping Open3D's multi-scale hybrid odometry with tuned convergence criteria, used by realtime tracking, relocalization, and the pose graph for any tracking path that needs an initial transformation.",
+      "tags": [
+        "odometry",
+        "tracking",
+        "utility",
+        "open3d"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Model.track_frame_to_model does not accept an initial transformation, so every path needing one (IMU prior, relocalization, loop-closure verification) is routed through this lower-level wrapper instead."
+    },
+    {
+      "id": "function:scanner/tracking.py:odo_criteria",
+      "type": "function",
+      "name": "odo_criteria",
+      "filePath": "scanner/tracking.py",
+      "lineRange": [
+        17,
+        25
+      ],
+      "summary": "Lazily builds and caches multi-scale convergence criteria (6/3/1 iterations) matching the realtime tracker's cheaper-than-default settings.",
+      "tags": [
+        "odometry",
+        "configuration",
+        "caching"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/tracking.py:rgbd_odometry",
+      "type": "function",
+      "name": "rgbd_odometry",
+      "filePath": "scanner/tracking.py",
+      "lineRange": [
+        28,
+        52
+      ],
+      "summary": "Thin wrapper over Open3D's hybrid multi-scale RGB-D odometry that accepts an initial transformation guess, used wherever tracking needs an init such as the IMU prior, relocalization, or loop-closure verification.",
+      "tags": [
+        "odometry",
+        "tracking",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scanner/config.py",
+      "type": "file",
+      "name": "config.py",
+      "filePath": "scanner/config.py",
+      "summary": "Module-level tuning constants for tracking health, relocalization, loop closure, and IMU gyro integration, each documented with guidance on which to adjust first when adapting the scanner to a new environment.",
+      "tags": [
+        "config",
+        "constants",
+        "tuning",
+        "utility"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Deliberately kept as module-level constants instead of CLI flags or a dataclass, with inline docstrings explaining the physical/algorithmic meaning of each threshold."
+    },
+    {
+      "id": "file:scanner/imu.py",
+      "type": "file",
+      "name": "imu.py",
+      "filePath": "scanner/imu.py",
+      "summary": "Implements gyro-aided tracking support: accumulates high-rate IMU angular-velocity samples arriving between video frames into a rotation prior for RGBD odometry, and starts a dedicated librealsense pipeline for the motion module.",
+      "tags": [
+        "imu",
+        "sensor-fusion",
+        "threading",
+        "rotation-prior"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:scanner/imu.py:GyroIntegrator",
+      "type": "class",
+      "name": "GyroIntegrator",
+      "filePath": "scanner/imu.py",
+      "lineRange": [
+        21,
+        66
+      ],
+      "summary": "Thread-safe accumulator that composes gyro angular-velocity samples into a rotation between video frames; pop_prior() conjugates the accumulated rotation into the color-camera frame and discards implausibly large rotations before handing it to the tracking pipeline.",
+      "tags": [
+        "imu",
+        "state",
+        "thread-safe",
+        "sensor-fusion"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/imu.py:start_imu",
+      "type": "function",
+      "name": "start_imu",
+      "filePath": "scanner/imu.py",
+      "lineRange": [
+        69,
+        94
+      ],
+      "summary": "Starts a second librealsense pipeline dedicated to the gyro/motion stream, wires its callback to a new GyroIntegrator, and computes the gyro-to-color extrinsic rotation; falls back to (None, None) gracefully if the motion module is unavailable.",
+      "tags": [
+        "imu",
+        "initialization",
+        "realsense",
+        "error-handling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scanner/posegraph.py",
+      "type": "file",
+      "name": "posegraph.py",
+      "filePath": "scanner/posegraph.py",
+      "summary": "Builds and optimizes an offline keyframe pose graph from tracked frames \u2014 odometry edges between consecutive keyframes plus loop-closure edges between spatially close, temporally distant keyframe pairs \u2014 then propagates the Levenberg-Marquardt-corrected keyframe poses onto every in-between frame via interpolation.",
+      "tags": [
+        "pose-graph",
+        "slam",
+        "optimization",
+        "loop-closure"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scanner/posegraph.py:select_keyframes",
+      "type": "function",
+      "name": "select_keyframes",
+      "filePath": "scanner/posegraph.py",
+      "lineRange": [
+        23,
+        36
+      ],
+      "summary": "Selects keyframe indices from a pose trajectory, sampling at a fixed stride or sooner when translation/rotation since the last keyframe exceeds given thresholds, and always includes the first and last frame.",
+      "tags": [
+        "keyframe-selection",
+        "slam",
+        "sampling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/posegraph.py:optimize_trajectory",
+      "type": "function",
+      "name": "optimize_trajectory",
+      "filePath": "scanner/posegraph.py",
+      "lineRange": [
+        39,
+        152
+      ],
+      "summary": "Constructs a pose graph over selected keyframes with RGBD-odometry-refined sequential edges and loop-closure edges, runs global Levenberg-Marquardt optimization, then interpolates the keyframe corrections onto all in-between frames to produce a drift-corrected trajectory.",
+      "tags": [
+        "pose-graph",
+        "optimization",
+        "loop-closure",
+        "rgbd-odometry"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scanner/transforms.py",
+      "type": "file",
+      "name": "transforms.py",
+      "filePath": "scanner/transforms.py",
+      "summary": "Small SO(3)/SE(3) math helpers (rotation-vector exponential map, geodesic rotation angle, rigid-transform interpolation) built on cv2.Rodrigues, avoiding a scipy dependency.",
+      "tags": [
+        "math",
+        "utility",
+        "rotation",
+        "geometry"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/transforms.py:so3_exp",
+      "type": "function",
+      "name": "so3_exp",
+      "filePath": "scanner/transforms.py",
+      "lineRange": [
+        7,
+        9
+      ],
+      "summary": "Exponential map converting an axis-angle rotation vector into a 3x3 rotation matrix via cv2.Rodrigues.",
+      "tags": [
+        "math",
+        "utility",
+        "rotation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/transforms.py:rotation_angle_deg",
+      "type": "function",
+      "name": "rotation_angle_deg",
+      "filePath": "scanner/transforms.py",
+      "lineRange": [
+        12,
+        15
+      ],
+      "summary": "Computes the geodesic rotation angle in degrees of a 3x3 rotation matrix from its trace.",
+      "tags": [
+        "math",
+        "utility",
+        "rotation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scanner/transforms.py:interp_transform",
+      "type": "function",
+      "name": "interp_transform",
+      "filePath": "scanner/transforms.py",
+      "lineRange": [
+        18,
+        30
+      ],
+      "summary": "Interpolates between two 4x4 rigid transforms at a fraction t, using geodesic (slerp-equivalent) interpolation for rotation and linear interpolation for translation; used to spread pose-graph corrections onto in-between frames.",
+      "tags": [
+        "math",
+        "interpolation",
+        "rotation",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:realtime_pointcloud.py",
+      "type": "file",
+      "name": "realtime_pointcloud.py",
+      "filePath": "realtime_pointcloud.py",
+      "summary": "Thin backwards-compatibility entry point at the project root that delegates straight to scanner.cli.main, kept so the scanner can still be launched as a standalone script.",
+      "tags": [
+        "entry-point",
+        "cli",
+        "wrapper",
+        "backwards-compatibility"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Standard Python 'if __name__ == \"__main__\"' guard delegating to a package-provided main() for one of three equivalent invocation paths."
+    },
+    {
+      "id": "file:scanner/__main__.py",
+      "type": "file",
+      "name": "__main__.py",
+      "filePath": "scanner/__main__.py",
+      "summary": "Package execution hook that lets the scanner be launched via `python -m scanner`, delegating to scanner.cli.main.",
+      "tags": [
+        "entry-point",
+        "cli",
+        "python-module"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Python's __main__.py convention makes a package directly runnable with `python -m <package>`."
+    },
+    {
+      "id": "file:scanner/cli.py",
+      "type": "file",
+      "name": "cli.py",
+      "filePath": "scanner/cli.py",
+      "summary": "Command-line interface for the D455 scanner: defines all CLI arguments (voxel sizes, depth range, keyframe thresholds, IMU/mesh/view toggles) and the main() function that dispatches to either offline refinement or a full realtime capture session.",
+      "tags": [
+        "entry-point",
+        "cli",
+        "argument-parsing",
+        "orchestration"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "main() is registered as the d455-scan console-script entry point in pyproject.toml and is reachable three equivalent ways (direct script, `python -m scanner`, or the installed console command)."
+    },
+    {
+      "id": "function:scanner/cli.py:parse_args",
+      "type": "function",
+      "name": "parse_args",
+      "filePath": "scanner/cli.py",
+      "lineRange": [
+        31,
+        82
+      ],
+      "summary": "Builds the argparse.ArgumentParser with every scanner tuning option (output path, voxel sizes, depth clamp, block count, keyframe thresholds, IMU/mesh/view/headless flags) and parses argv.",
+      "tags": [
+        "cli",
+        "argument-parsing",
+        "configuration"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scanner/cli.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scanner/cli.py",
+      "lineRange": [
+        85,
+        101
+      ],
+      "summary": "Entry point that parses arguments, selects an Open3D CUDA/CPU device, and either runs the offline refinement pipeline on a previous session (--refine-only) or drives a full CaptureSession (warm up, run, finalize).",
+      "tags": [
+        "entry-point",
+        "orchestration",
+        "cli",
+        "device-selection"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:.ua/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".ua/.understandignore",
+      "summary": "Ignore-pattern list used by the Understand-Anything analysis tool to exclude paths from codebase scanning; a tool artifact, not part of the D455 scanner's own source or architecture.",
+      "tags": [
+        "configuration",
+        "tooling",
+        "ignore-list"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.ua/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".ua/config.json",
+      "summary": "Single-key configuration file for the Understand-Anything analysis tool specifying the output language for generated content; a tool artifact unrelated to the scanner's own configuration.",
+      "tags": [
+        "configuration",
+        "tooling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Top-level project documentation for the D455 realtime RGB-D scanner: explains the two-phase capture/offline pipeline, requirements, run instructions, key bindings, output files, crash recovery, project layout, tuning parameters, and scanning tips.",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "overview",
+        "usage-guide"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:pyproject.toml",
+      "type": "config",
+      "name": "pyproject.toml",
+      "filePath": "pyproject.toml",
+      "summary": "Python packaging configuration (setuptools build backend) declaring the d455-scanner project's metadata, dependencies (numpy, opencv-python, open3d, pyrealsense2), and the `d455-scan` console-script entry point mapped to scanner.cli:main.",
+      "tags": [
+        "configuration",
+        "build-system",
+        "packaging",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scanner/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "scanner/__init__.py",
+      "summary": "Package root for the scanner module; its docstring documents the two-phase reconstruction pipeline (realtime capture then offline pose-graph refinement) and maps out the responsibilities of every submodule (cli, config, camera, imu, capture, tracking, posegraph, mapping, pipeline, frameio, transforms). Declares __version__.",
+      "tags": [
+        "entry-point",
+        "documentation",
+        "package-init",
+        "python"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Uses Sphinx-style reStructuredText cross-references (:mod:`scanner.x`) inside the module docstring to document the package's module map."
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scanner/camera.py",
+      "target": "function:scanner/camera.py:start_camera",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/camera.py",
+      "target": "function:scanner/camera.py:filter_and_align",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/camera.py",
+      "target": "function:scanner/camera.py:lock_exposure",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/capture.py",
+      "target": "class:scanner/capture.py:CaptureSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:__init__",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:warm_up",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:_shutdown",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:_step",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:_prepare",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:_track",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:_relocalize",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:_integrate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:_hud",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:_reset",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/capture.py:CaptureSession",
+      "target": "function:scanner/capture.py:finalize",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/frameio.py",
+      "target": "class:scanner/frameio.py:FrameWriter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/frameio.py:FrameWriter",
+      "target": "function:scanner/frameio.py:_run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:scanner/frameio.py:FrameWriter",
+      "target": "function:scanner/frameio.py:drain",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/frameio.py",
+      "target": "function:scanner/frameio.py:load_rgbd",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/frameio.py",
+      "target": "function:scanner/frameio.py:build_meta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/frameio.py",
+      "target": "function:scanner/frameio.py:save_meta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/frameio.py",
+      "target": "function:scanner/frameio.py:load_meta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/mapping.py",
+      "target": "function:scanner/mapping.py:extract_cloud",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/mapping.py",
+      "target": "function:scanner/mapping.py:save_cloud",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/mapping.py",
+      "target": "function:scanner/mapping.py:refine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/pipeline.py",
+      "target": "function:scanner/pipeline.py:offline_pipeline",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/pipeline.py",
+      "target": "function:scanner/pipeline.py:view_result",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/pipeline.py",
+      "target": "function:scanner/pipeline.py:refine_only",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/tracking.py",
+      "target": "function:scanner/tracking.py:odo_criteria",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/tracking.py",
+      "target": "function:scanner/tracking.py:rgbd_odometry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/camera.py",
+      "target": "function:scanner/camera.py:start_camera",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/camera.py",
+      "target": "function:scanner/camera.py:filter_and_align",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/camera.py",
+      "target": "function:scanner/camera.py:lock_exposure",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/capture.py",
+      "target": "class:scanner/capture.py:CaptureSession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/frameio.py",
+      "target": "class:scanner/frameio.py:FrameWriter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/frameio.py",
+      "target": "function:scanner/frameio.py:load_rgbd",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/frameio.py",
+      "target": "function:scanner/frameio.py:build_meta",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/frameio.py",
+      "target": "function:scanner/frameio.py:save_meta",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/frameio.py",
+      "target": "function:scanner/frameio.py:load_meta",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/mapping.py",
+      "target": "function:scanner/mapping.py:extract_cloud",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/mapping.py",
+      "target": "function:scanner/mapping.py:save_cloud",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/mapping.py",
+      "target": "function:scanner/mapping.py:refine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/pipeline.py",
+      "target": "function:scanner/pipeline.py:offline_pipeline",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/pipeline.py",
+      "target": "function:scanner/pipeline.py:view_result",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/pipeline.py",
+      "target": "function:scanner/pipeline.py:refine_only",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/tracking.py",
+      "target": "function:scanner/tracking.py:odo_criteria",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/tracking.py",
+      "target": "function:scanner/tracking.py:rgbd_odometry",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/capture.py",
+      "target": "file:scanner/camera.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/capture.py",
+      "target": "file:scanner/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/capture.py",
+      "target": "file:scanner/frameio.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/capture.py",
+      "target": "file:scanner/imu.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/capture.py",
+      "target": "file:scanner/mapping.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/capture.py",
+      "target": "file:scanner/pipeline.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/capture.py",
+      "target": "file:scanner/tracking.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/pipeline.py",
+      "target": "file:scanner/frameio.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/pipeline.py",
+      "target": "file:scanner/mapping.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/pipeline.py",
+      "target": "file:scanner/posegraph.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:scanner/capture.py:__init__",
+      "target": "function:scanner/camera.py:start_camera",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:__init__",
+      "target": "function:scanner/imu.py:start_imu",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:__init__",
+      "target": "class:scanner/frameio.py:FrameWriter",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:warm_up",
+      "target": "function:scanner/camera.py:lock_exposure",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:warm_up",
+      "target": "function:scanner/frameio.py:save_meta",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:_step",
+      "target": "function:scanner/camera.py:filter_and_align",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:_track",
+      "target": "function:scanner/tracking.py:rgbd_odometry",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:_relocalize",
+      "target": "function:scanner/tracking.py:rgbd_odometry",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:_hud",
+      "target": "function:scanner/mapping.py:save_cloud",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:finalize",
+      "target": "function:scanner/pipeline.py:offline_pipeline",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:finalize",
+      "target": "function:scanner/pipeline.py:view_result",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:finalize",
+      "target": "function:scanner/mapping.py:save_cloud",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/capture.py:finalize",
+      "target": "function:scanner/frameio.py:save_meta",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/pipeline.py:offline_pipeline",
+      "target": "function:scanner/posegraph.py:optimize_trajectory",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/pipeline.py:offline_pipeline",
+      "target": "function:scanner/mapping.py:refine",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/pipeline.py:offline_pipeline",
+      "target": "function:scanner/mapping.py:save_cloud",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/pipeline.py:refine_only",
+      "target": "function:scanner/frameio.py:load_meta",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/imu.py",
+      "target": "file:scanner/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/imu.py",
+      "target": "file:scanner/transforms.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/posegraph.py",
+      "target": "file:scanner/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/posegraph.py",
+      "target": "file:scanner/frameio.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/posegraph.py",
+      "target": "file:scanner/tracking.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/posegraph.py",
+      "target": "file:scanner/transforms.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/imu.py",
+      "target": "class:scanner/imu.py:GyroIntegrator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/imu.py",
+      "target": "function:scanner/imu.py:start_imu",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/posegraph.py",
+      "target": "function:scanner/posegraph.py:select_keyframes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/posegraph.py",
+      "target": "function:scanner/posegraph.py:optimize_trajectory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/transforms.py",
+      "target": "function:scanner/transforms.py:so3_exp",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/transforms.py",
+      "target": "function:scanner/transforms.py:rotation_angle_deg",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/transforms.py",
+      "target": "function:scanner/transforms.py:interp_transform",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/imu.py",
+      "target": "class:scanner/imu.py:GyroIntegrator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/imu.py",
+      "target": "function:scanner/imu.py:start_imu",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/posegraph.py",
+      "target": "function:scanner/posegraph.py:select_keyframes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/posegraph.py",
+      "target": "function:scanner/posegraph.py:optimize_trajectory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/transforms.py",
+      "target": "function:scanner/transforms.py:so3_exp",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/transforms.py",
+      "target": "function:scanner/transforms.py:rotation_angle_deg",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/transforms.py",
+      "target": "function:scanner/transforms.py:interp_transform",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:scanner/imu.py:GyroIntegrator",
+      "target": "function:scanner/transforms.py:so3_exp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:scanner/imu.py:GyroIntegrator",
+      "target": "function:scanner/transforms.py:rotation_angle_deg",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/posegraph.py:select_keyframes",
+      "target": "function:scanner/transforms.py:rotation_angle_deg",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/posegraph.py:optimize_trajectory",
+      "target": "function:scanner/tracking.py:rgbd_odometry",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/posegraph.py:optimize_trajectory",
+      "target": "function:scanner/frameio.py:load_rgbd",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/posegraph.py:optimize_trajectory",
+      "target": "function:scanner/transforms.py:interp_transform",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:realtime_pointcloud.py",
+      "target": "file:scanner/cli.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/__main__.py",
+      "target": "file:scanner/cli.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scanner/cli.py",
+      "target": "function:scanner/cli.py:parse_args",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/cli.py",
+      "target": "function:scanner/cli.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scanner/cli.py",
+      "target": "function:scanner/cli.py:parse_args",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/cli.py",
+      "target": "function:scanner/cli.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:realtime_pointcloud.py",
+      "target": "function:scanner/cli.py:main",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/__main__.py",
+      "target": "function:scanner/cli.py:main",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/cli.py:main",
+      "target": "function:scanner/cli.py:parse_args",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/cli.py:main",
+      "target": "function:scanner/pipeline.py:refine_only",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scanner/cli.py:main",
+      "target": "class:scanner/capture.py:CaptureSession",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scanner/cli.py",
+      "target": "file:scanner/pipeline.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:scanner/cli.py",
+      "target": "file:scanner/capture.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "file:scanner/__init__.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:scanner/__init__.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:entry-points",
+      "name": "CLI & Entry Points",
+      "description": "The three ways to launch the D455 scanner (console script via cli.py, `python -m scanner`, and the standalone root script) plus the package root that documents the overall two-phase pipeline.",
+      "nodeIds": [
+        "file:scanner/cli.py",
+        "file:scanner/__main__.py",
+        "file:realtime_pointcloud.py",
+        "file:scanner/__init__.py"
+      ]
+    },
+    {
+      "id": "layer:sensor-io",
+      "name": "Sensor & Camera I/O",
+      "description": "Direct interfaces to the RealSense D455 hardware: the depth/color video pipeline with post-processing and exposure locking, and the IMU motion-module pipeline that primes tracking with a rotation prior.",
+      "nodeIds": [
+        "file:scanner/camera.py",
+        "file:scanner/imu.py"
+      ]
+    },
+    {
+      "id": "layer:tracking-capture",
+      "name": "Realtime Capture & Tracking",
+      "description": "The live realtime capture loop (CaptureSession) that orchestrates camera and IMU acquisition, frame-to-model tracking, relocalization, and TSDF integration, along with the shared RGB-D odometry helper it relies on.",
+      "nodeIds": [
+        "file:scanner/capture.py",
+        "file:scanner/tracking.py"
+      ]
+    },
+    {
+      "id": "layer:offline-reconstruction",
+      "name": "Offline Reconstruction Pipeline",
+      "description": "Post-capture refinement of a scan: pose-graph construction and optimization with loop closure, TSDF re-integration at finer voxel resolution, and point cloud/mesh export.",
+      "nodeIds": [
+        "file:scanner/pipeline.py",
+        "file:scanner/posegraph.py",
+        "file:scanner/mapping.py"
+      ]
+    },
+    {
+      "id": "layer:shared-utility",
+      "name": "Shared Utilities & Configuration",
+      "description": "Cross-cutting support modules used by both the realtime capture path and the offline pipeline: threaded frame/metadata persistence, tuning constants, and SO(3)/SE(3) math helpers.",
+      "nodeIds": [
+        "file:scanner/frameio.py",
+        "file:scanner/config.py",
+        "file:scanner/transforms.py"
+      ]
+    },
+    {
+      "id": "layer:documentation",
+      "name": "Documentation & Packaging",
+      "description": "Project-level documentation and Python packaging metadata describing how to install, run, and understand the D455 scanner.",
+      "nodeIds": [
+        "document:README.md",
+        "config:pyproject.toml"
+      ]
+    },
+    {
+      "id": "layer:tooling-artifacts",
+      "name": "Tooling / Analysis Artifacts",
+      "description": "Configuration and ignore-list files belonging to the Understand-Anything analysis tool itself, unrelated to the D455 scanner's own architecture.",
+      "nodeIds": [
+        "file:.ua/.understandignore",
+        "config:.ua/config.json"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Project Overview",
+      "description": "Start with the README to understand what this project does: a handheld realtime RGB-D 3D scanner for the Intel RealSense D455 that fuses dense SLAM tracking with TSDF volume integration, then refines the result offline with pose-graph optimization. It lays out the two-phase design philosophy (realtime capture, then offline refinement) that every module in this tour will map onto, plus the project's requirements, key bindings, and output files.",
+      "nodeIds": [
+        "document:README.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Package Root and Packaging Config",
+      "description": "The scanner package's __init__.py docstring documents the two-phase pipeline described in the README and maps out what every submodule is responsible for, making it the code-level table of contents. pyproject.toml configures this package for distribution, declaring its dependencies and registering the d455-scan console-script entry point that maps straight to scanner.cli:main.",
+      "nodeIds": [
+        "file:scanner/__init__.py",
+        "config:pyproject.toml"
+      ],
+      "languageLesson": "Python's pyproject.toml [project.scripts] table wires a shell command (d455-scan) to a Python callable (scanner.cli:main), so pip-installing the package also installs a runnable CLI binary."
+    },
+    {
+      "order": 3,
+      "title": "Entry Points",
+      "description": "Two files let you launch the scanner: scanner/__main__.py enables `python -m scanner`, the standard way to run a Python package as a script, while realtime_pointcloud.py is a thin backwards-compatible entry point kept at the project root for users who ran the tool before it became a package. Both simply delegate to scanner.cli.main, keeping all real logic in one place.",
+      "nodeIds": [
+        "file:scanner/__main__.py",
+        "file:realtime_pointcloud.py"
+      ],
+      "languageLesson": "The __main__.py convention lets a package be executable directly (`python -m scanner`); Python looks for this file automatically when a package name is passed to -m."
+    },
+    {
+      "order": 4,
+      "title": "Command-Line Interface",
+      "description": "cli.py is where a scan actually begins: it defines every tunable CLI argument (voxel sizes, depth range, keyframe thresholds, IMU/mesh/view toggles) and its main() function dispatches to one of two paths \u2014 a full realtime CaptureSession, or an offline refine_only pass over previously recorded frames. This dispatch is the fork point that separates the two phases you read about in the README.",
+      "nodeIds": [
+        "file:scanner/cli.py"
+      ],
+      "languageLesson": "argparse-based CLIs centralize all user-tunable knobs in one file, so the rest of the codebase can treat these values as plain function parameters instead of re-parsing arguments everywhere."
+    },
+    {
+      "order": 5,
+      "title": "Realtime Capture Session",
+      "description": "capture.py defines CaptureSession, the highest fan-out module in the codebase \u2014 it orchestrates camera and IMU acquisition, IMU-primed frame-to-model tracking with relocalization, TSDF integration, and background frame recording, then crash-safely hands off to offline refinement on finalize. This is the beating heart of the live scanning loop that cli.py invokes.",
+      "nodeIds": [
+        "file:scanner/capture.py"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "Sensor Acquisition: Camera and IMU",
+      "description": "camera.py drives the RealSense D455's depth+color streaming, builds the depth post-processing filter chain, and locks auto-exposure/white-balance so TSDF colors stay consistent across a scan. imu.py runs a separate librealsense pipeline for the motion module, accumulating high-rate gyro samples between video frames into a rotation prior that primes the tracker \u2014 both are imported directly by CaptureSession from Step 5.",
+      "nodeIds": [
+        "file:scanner/camera.py",
+        "file:scanner/imu.py"
+      ],
+      "languageLesson": "Running the IMU on its own librealsense pipeline, separate from the video stream, lets high-rate gyro samples (hundreds of Hz) be captured without being bottlenecked by the much slower depth/color frame rate."
+    },
+    {
+      "order": 7,
+      "title": "Odometry Engine and Tuning Constants",
+      "description": "tracking.py wraps Open3D's multi-scale hybrid RGBD odometry with tuned convergence criteria; it's shared by realtime tracking, relocalization, and the offline pose graph from Step 9, so any code path needing frame-to-frame alignment goes through here. config.py holds the module-level constants that govern tracking health, relocalization, loop closure, and IMU integration, each documented with guidance on what to adjust first when adapting the scanner to a new environment.",
+      "nodeIds": [
+        "file:scanner/tracking.py",
+        "file:scanner/config.py"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "Offline Refinement Pipeline",
+      "description": "pipeline.py is the second phase's orchestrator, shared by both live capture's finalize step and the standalone --refine-only CLI mode. It optimizes the tracked trajectory via pose-graph optimization, re-integrates every recorded frame at a finer voxel resolution, and saves the final point cloud \u2014 it can even rebuild a whole scan from a previous session's frames directory without touching the camera.",
+      "nodeIds": [
+        "file:scanner/pipeline.py"
+      ]
+    },
+    {
+      "order": 9,
+      "title": "Pose Graph and Loop Closure",
+      "description": "posegraph.py is what makes the offline phase worth running: it builds a keyframe pose graph with odometry edges between consecutive keyframes plus loop-closure edges between spatially close but temporally distant keyframes, then optimizes it to remove accumulated drift. The corrected keyframe poses are then propagated onto every in-between frame via interpolation, which is why every frame \u2014 not just keyframes \u2014 ends up better aligned.",
+      "nodeIds": [
+        "file:scanner/posegraph.py"
+      ],
+      "languageLesson": "Pose-graph optimization treats camera poses as graph nodes and relative-motion measurements as edges; adding loop-closure edges when the camera revisits a place gives the optimizer extra constraints that cancel out accumulated drift, the same principle behind full SLAM back-ends like g2o and Ceres."
+    },
+    {
+      "order": 10,
+      "title": "SO(3)/SE(3) Math Helpers",
+      "description": "transforms.py provides the small rotation and rigid-transform math that posegraph.py (Step 9) and imu.py (Step 6) both depend on: a rotation-vector exponential map, geodesic rotation angle, and rigid-transform interpolation, all built directly on cv2.Rodrigues instead of pulling in scipy. It's a good example of how the project favors minimal dependencies over general-purpose math libraries.",
+      "nodeIds": [
+        "file:scanner/transforms.py"
+      ],
+      "languageLesson": "The exponential map converts a 3D rotation vector (axis * angle) into a rotation matrix via Rodrigues' formula; interpolating between two poses this way (a simplified slerp) gives smooth, geometrically correct in-between rotations rather than naive linear blending."
+    },
+    {
+      "order": 11,
+      "title": "Frame and Metadata I/O",
+      "description": "frameio.py's FrameWriter saves depth/color PNGs and JPEGs on a background thread so disk writes never block the realtime tracking loop in capture.py, and it also provides the loaders that pipeline.py and posegraph.py use to read those recorded frames back during offline refinement. It's the bridge connecting what gets written during Step 5's live capture to what gets read during Steps 8-9's offline pass.",
+      "nodeIds": [
+        "file:scanner/frameio.py"
+      ],
+      "languageLesson": "Offloading disk I/O to a background thread with a queue is a classic producer-consumer pattern: the tracking loop stays real-time responsive while writes happen asynchronously, at the cost of needing crash-safe finalization to flush any pending frames."
+    },
+    {
+      "order": 12,
+      "title": "TSDF Mapping and Export",
+      "description": "mapping.py operates on the TSDF voxel block grid at both ends of the pipeline: during live capture it does coarse integration for real-time feedback, and during offline refinement (Step 8) it re-fuses every recorded frame at a finer voxel resolution before extracting and exporting the final point cloud in 8-bit-RGB legacy format for compatibility with external viewers like MeshLab or CloudCompare.",
+      "nodeIds": [
+        "file:scanner/mapping.py"
+      ]
+    }
+  ]
+}

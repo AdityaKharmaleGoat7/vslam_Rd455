@@ -1,0 +1,52 @@
+{
+  "scriptCompleted": true,
+  "stats": {
+    "filesScanned": 18,
+    "filesWithImports": 6,
+    "totalEdges": 18
+  },
+  "importMap": {
+    ".ua/.understandignore": [],
+    ".ua/config.json": [],
+    "README.md": [],
+    "pyproject.toml": [],
+    "realtime_pointcloud.py": [
+      "scanner/cli.py"
+    ],
+    "scanner/__init__.py": [],
+    "scanner/__main__.py": [
+      "scanner/cli.py"
+    ],
+    "scanner/camera.py": [],
+    "scanner/capture.py": [
+      "scanner/camera.py",
+      "scanner/config.py",
+      "scanner/frameio.py",
+      "scanner/imu.py",
+      "scanner/mapping.py",
+      "scanner/pipeline.py",
+      "scanner/tracking.py"
+    ],
+    "scanner/cli.py": [],
+    "scanner/config.py": [],
+    "scanner/frameio.py": [],
+    "scanner/imu.py": [
+      "scanner/config.py",
+      "scanner/transforms.py"
+    ],
+    "scanner/mapping.py": [],
+    "scanner/pipeline.py": [
+      "scanner/frameio.py",
+      "scanner/mapping.py",
+      "scanner/posegraph.py"
+    ],
+    "scanner/posegraph.py": [
+      "scanner/config.py",
+      "scanner/frameio.py",
+      "scanner/tracking.py",
+      "scanner/transforms.py"
+    ],
+    "scanner/tracking.py": [],
+    "scanner/transforms.py": []
+  }
+}
